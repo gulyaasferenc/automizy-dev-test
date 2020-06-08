@@ -3,15 +3,14 @@ import path from 'path'
 import grpc from 'grpc'
 const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
-const PROTO_PATH = path.join(__dirname, '../../proto/student.proto')
+const PROTO_PATH = path.join(__dirname, '../../proto/project.proto')
 
 exports.validationRules = (method) => {
   switch (method) {
     case 'create': {
       return [
-        body('first_name').not().isEmpty(),
-        body('last_name').not().isEmpty(),
-        body('email').isEmail()
+        body('name').not().isEmpty(),
+        body('description').not().isEmpty(),
       ]
     }
   }
@@ -39,10 +38,10 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 })
 
 // Load in our service definition
-const studentProto = grpc.loadPackageDefinition(packageDefinition).student
-const client = new studentProto.StudentService(config.student.host + ':' + config.student.port, grpc.credentials.createInsecure())
+const projectProto = grpc.loadPackageDefinition(packageDefinition).project
+const client = new projectProto.ProjectService(config.project.host + ':' + config.project.port, grpc.credentials.createInsecure())
 
-const studentList = (options) => {
+const projectList = (options) => {
   return new Promise((resolve, reject) => {
     client.List(options, (error, response) => {
       if (error) { reject(error) }
@@ -53,14 +52,14 @@ const studentList = (options) => {
 
 exports.list = async (req, res, next) => {
   try {
-    let result = await studentList()
+    let result = await projectList()
     res.status(200).json(result)
   } catch (e) {
-    res.json(e)
+    res.status(500).json(e)
   }
 }
 
-const studentCreate = (options) => {
+const projectCreate = (options) => {
   return new Promise((resolve, reject) => {
     client.Create(options, (error, response) => {
       if (error) { reject(error) }
@@ -71,10 +70,9 @@ const studentCreate = (options) => {
 
 exports.create = async (req, res, next) => {
   try {
-    let result = await studentCreate({
-      "first_name": req.body.first_name,
-      "last_name": req.body.last_name,
-      "email": req.body.email
+    let result = await projectCreate({
+      "name": req.body.name,
+      "description": req.body.description
     })
     res.status(201).json(result)
   } catch (err) {
@@ -90,7 +88,7 @@ exports.create = async (req, res, next) => {
   }
 }
 
-const studentRead = (options) => {
+const projectRead = (options) => {
   return new Promise((resolve, reject) => {
     client.Read(options, (error, response) => {
       if (error) { reject(error) }
@@ -101,7 +99,7 @@ const studentRead = (options) => {
 
 exports.read = async (req, res, next) => {
   try {
-    let result = await studentRead({
+    let result = await projectRead({
       "id": req.params.id
     })
     res.status(200).json(result)
@@ -115,7 +113,7 @@ exports.read = async (req, res, next) => {
   }
 }
 
-const studentUpdate = (options) => {
+const projectUpdate = (options) => {
   return new Promise((resolve, reject) => {
     client.Update(options, (error, response) => {
       if (error) { reject(error) }
@@ -126,11 +124,10 @@ const studentUpdate = (options) => {
 
 exports.update = async (req, res, next) => {
   try {
-    let result = await studentUpdate({
+    let result = await projectUpdate({
       "id": req.params.id,
-      "first_name": req.body.first_name,
-      "last_name": req.body.last_name,
-      "email": req.body.email
+      "name": req.body.name,
+      "description": req.body.description
     })
     res.status(200).json({ id: req.params.id })
   } catch (e) {
@@ -143,7 +140,7 @@ exports.update = async (req, res, next) => {
   }
 }
 
-const studentDelete = (options) => {
+const projectDelete = (options) => {
   return new Promise((resolve, reject) => {
     client.Delete(options, (error, response) => {
       if (error) { reject(error) }
@@ -154,7 +151,7 @@ const studentDelete = (options) => {
 
 exports.delete = async (req, res, next) => {
   try {
-    let result = await studentDelete({
+    let result = await projectDelete({
       "id": req.params.id
     })
     res.status(200).json({ id: req.params.id })

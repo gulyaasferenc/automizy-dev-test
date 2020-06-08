@@ -1,12 +1,13 @@
+
 const ProjectModel = ({
-    sequelize, 
-    DataType
-  }) => {
-  const {INTEGER, STRING, TEXT, DATE, NOW} = DataType
+  sequelize,
+  DataType
+}) => {
+  const { INTEGER, STRING, TEXT, DATE, NOW } = DataType
   const Project = sequelize.define("project", {
     id: {
-      type: INTEGER, 
-      primaryKey: true, 
+      type: INTEGER,
+      primaryKey: true,
       autoIncrement: true
     },
     name: {
@@ -24,5 +25,5 @@ const ProjectModel = ({
   })
   return Project;
 }
-  
+
 export default ProjectModel

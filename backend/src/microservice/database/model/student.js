@@ -1,12 +1,12 @@
 const StudentModel = ({
-    sequelize, 
-    DataType
-  }) => {
-  const {INTEGER, STRING, DATE, NOW} = DataType
+  sequelize,
+  DataType
+}) => {
+  const { INTEGER, STRING, DATE, NOW } = DataType
   const Student = sequelize.define("student", {
     id: {
-      type: INTEGER, 
-      primaryKey: true, 
+      type: INTEGER,
+      primaryKey: true,
       autoIncrement: true
     },
     first_name: {
@@ -30,5 +30,5 @@ const StudentModel = ({
   })
   return Student;
 }
-  
+
 export default StudentModel

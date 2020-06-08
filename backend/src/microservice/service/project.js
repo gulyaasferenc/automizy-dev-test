@@ -3,8 +3,8 @@ import grpc from 'grpc'
 const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
 import db from '../../microservice/database/connect'
-import StudentModel from '../../microservice/database/model/student'
-const PROTO_PATH = path.join(__dirname, '../../proto/student.proto')
+import ProjectModel from '../../microservice/database/model/project'
+const PROTO_PATH = path.join(__dirname, '../../proto/project.proto')
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     keepCase: true,
@@ -15,10 +15,10 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 })
 
 // Load in our service definition
-const studentProto = grpc.loadPackageDefinition(packageDefinition).student
+const projectProto = grpc.loadPackageDefinition(packageDefinition).project
 const server = new grpc.Server()
 
-const studentModel = StudentModel(db)
+const projectModel = ProjectModel(db)
 
 // Implement the list function
 const List = async (call, callback) => {
@@ -27,9 +27,9 @@ const List = async (call, callback) => {
 
     // Tanulók listázása adatbázisból
     try {
-        //const result = await studentModel.findAll({ where: condition })
-        const result = await studentModel.findAll()
-        callback(null, { students: result })
+        //const result = await projectModel.findAll({ where: condition })
+        const result = await projectModel.findAll()
+        callback(null, { projects: result })
     }
     catch (err) {
         callback({
@@ -40,9 +40,9 @@ const List = async (call, callback) => {
 }
 // Implement the insert function
 const Create = async (call, callback) => {
-    let student = call.request
+    let project = call.request
     try {
-        let result = await studentModel.create(student)
+        let result = await projectModel.create(project)
         callback(null, result)
     } catch (err) {
         switch (err.name) {
@@ -67,7 +67,7 @@ const Read = async (call, callback) => {
     // ...
     // Kontakt mentése adatbázisba
     try {
-        let result = await studentModel.findByPk(id)
+        let result = await projectModel.findByPk(id)
         if (result) {
             callback(null, result)
         }
@@ -86,17 +86,15 @@ const Read = async (call, callback) => {
 }
 // Implement the update function
 const Update = async (call, callback) => {
-    let student = call.request
+    let project = call.request
     try {
-        let affectedRows = await studentModel.update(
+        let affectedRows = await projectModel.update(
             {
-                "first_name": student.first_name,
-                "last_name": student.last_name,
-                "title": student.title,
-                "email": student.email
+                "name": project.name,
+                "description": project.description
             },
             {
-                where: { id: student.id }
+                where: { id: project.id }
             }
         )
         if (affectedRows[0]) {
@@ -119,7 +117,7 @@ const Update = async (call, callback) => {
 const Delete = async (call, callback) => {
     let id = call.request.id
     try {
-        let result = await studentModel.destroy({ where: { "id": id } })
+        let result = await projectModel.destroy({ where: { "id": id } })
         if (result) {
             callback(null, result)
         }
@@ -144,7 +142,7 @@ const dbErrorCollector = ({
     const error = errors.map(item => {
         metadata.set(item.path, item.type)
     })
-    return error
+    return metadata
 }
 const exposedFunctions = {
     List,
@@ -154,15 +152,15 @@ const exposedFunctions = {
     Delete
 }
 
-server.addService(studentProto.StudentService.service, exposedFunctions)
-server.bind(config.student.host + ':' + config.student.port, grpc.ServerCredentials.createInsecure())
+server.addService(projectProto.ProjectService.service, exposedFunctions)
+server.bind(config.project.host + ':' + config.project.port, grpc.ServerCredentials.createInsecure())
 
 db.sequelize.sync().then(() => {
     console.log("Re-sync db.")
     server.start()
-    console.log('Server running at ' + config.student.host + ':' + config.student.port)
+    console.log('Server running at ' + config.project.host + ':' + config.project.port)
 })
     .catch(err => {
-        console.log('Can not start server at ' + config.student.host + ':' + config.student.port)
+        console.log('Can not start server at ' + config.project.host + ':' + config.project.port)
         console.log(err)
     })

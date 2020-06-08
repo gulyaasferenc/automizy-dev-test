@@ -3,16 +3,12 @@ import path from 'path'
 import grpc from 'grpc'
 const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
-const PROTO_PATH = path.join(__dirname, '../../proto/student.proto')
+const PROTO_PATH = path.join(__dirname, '../../proto/management.proto')
 
 exports.validationRules = (method) => {
   switch (method) {
     case 'create': {
-      return [
-        body('first_name').not().isEmpty(),
-        body('last_name').not().isEmpty(),
-        body('email').isEmail()
-      ]
+      return [body('student_id').not().isEmpty()]
     }
   }
 }
@@ -39,10 +35,10 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 })
 
 // Load in our service definition
-const studentProto = grpc.loadPackageDefinition(packageDefinition).student
-const client = new studentProto.StudentService(config.student.host + ':' + config.student.port, grpc.credentials.createInsecure())
+const managementProto = grpc.loadPackageDefinition(packageDefinition).management
+const client = new managementProto.ManagementService(config.management.host + ':' + config.management.port, grpc.credentials.createInsecure())
 
-const studentList = (options) => {
+const managementList = (options) => {
   return new Promise((resolve, reject) => {
     client.List(options, (error, response) => {
       if (error) { reject(error) }
@@ -53,14 +49,14 @@ const studentList = (options) => {
 
 exports.list = async (req, res, next) => {
   try {
-    let result = await studentList()
+    let result = await managementList()
     res.status(200).json(result)
   } catch (e) {
     res.json(e)
   }
 }
 
-const studentCreate = (options) => {
+const managementCreate = (options) => {
   return new Promise((resolve, reject) => {
     client.Create(options, (error, response) => {
       if (error) { reject(error) }
@@ -71,10 +67,9 @@ const studentCreate = (options) => {
 
 exports.create = async (req, res, next) => {
   try {
-    let result = await studentCreate({
-      "first_name": req.body.first_name,
-      "last_name": req.body.last_name,
-      "email": req.body.email
+    let result = await managementCreate({
+      "student_id": req.body.student_id,
+      "project_id": req.body.project_id
     })
     res.status(201).json(result)
   } catch (err) {
@@ -90,19 +85,28 @@ exports.create = async (req, res, next) => {
   }
 }
 
-const studentRead = (options) => {
+const managementRead = (options) => {
   return new Promise((resolve, reject) => {
-    client.Read(options, (error, response) => {
-      if (error) { reject(error) }
-      resolve(response)
-    })
+    // Check which is our search criteria
+    if (options.project_id) {
+      client.ReadByProjectID(options, (error, response) => {
+        if (error) { reject(error) }
+        resolve(response)
+      })
+    } else {
+      client.ReadByStudentID(options, (error, response) => {
+        if (error) { reject(error) }
+        console.log(response)
+        resolve(response)
+      })
+    }
   })
 }
 
-exports.read = async (req, res, next) => {
+exports.readByStudent = async (req, res, next) => {
   try {
-    let result = await studentRead({
-      "id": req.params.id
+    let result = await managementRead({
+      "student_id": req.params.student_id
     })
     res.status(200).json(result)
   } catch (e) {
@@ -115,7 +119,23 @@ exports.read = async (req, res, next) => {
   }
 }
 
-const studentUpdate = (options) => {
+exports.readByProject = async (req, res, next) => {
+  try {
+    let result = await managementRead({
+      "project_id": req.params.project_id
+    })
+    res.status(200).json(result)
+  } catch (e) {
+    if (e.details === 'Not found') {
+      res.status(204).json(e)
+    }
+    else {
+      res.status(500).json(e)
+    }
+  }
+}
+
+const managementUpdate = (options) => {
   return new Promise((resolve, reject) => {
     client.Update(options, (error, response) => {
       if (error) { reject(error) }
@@ -126,11 +146,9 @@ const studentUpdate = (options) => {
 
 exports.update = async (req, res, next) => {
   try {
-    let result = await studentUpdate({
-      "id": req.params.id,
-      "first_name": req.body.first_name,
-      "last_name": req.body.last_name,
-      "email": req.body.email
+    let result = await managementUpdate({
+      "student_id": req.body.student_id,
+      "project_id": req.body.first_name
     })
     res.status(200).json({ id: req.params.id })
   } catch (e) {
@@ -143,7 +161,7 @@ exports.update = async (req, res, next) => {
   }
 }
 
-const studentDelete = (options) => {
+const managementDelete = (options) => {
   return new Promise((resolve, reject) => {
     client.Delete(options, (error, response) => {
       if (error) { reject(error) }
@@ -154,7 +172,7 @@ const studentDelete = (options) => {
 
 exports.delete = async (req, res, next) => {
   try {
-    let result = await studentDelete({
+    let result = await managementDelete({
       "id": req.params.id
     })
     res.status(200).json({ id: req.params.id })
