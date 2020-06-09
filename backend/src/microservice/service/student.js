@@ -4,6 +4,7 @@ const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
 import db from '../../microservice/database/connect'
 import StudentModel from '../../microservice/database/model/student'
+import ManagementModel from '../../microservice/database/model/management'
 const PROTO_PATH = path.join(__dirname, '../../proto/student.proto')
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -19,6 +20,7 @@ const studentProto = grpc.loadPackageDefinition(packageDefinition).student
 const server = new grpc.Server()
 
 const studentModel = StudentModel(db)
+const managementModel = ManagementModel(db)
 
 // Implement the list function
 const List = async (call, callback) => {
@@ -119,6 +121,7 @@ const Update = async (call, callback) => {
 const Delete = async (call, callback) => {
     let id = call.request.id
     try {
+        await managementModel.destroy({ where: { "student_id": id } })
         let result = await studentModel.destroy({ where: { "id": id } })
         if (result) {
             callback(null, result)

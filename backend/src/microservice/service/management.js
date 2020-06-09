@@ -3,9 +3,9 @@ import grpc from 'grpc'
 const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
 import db from '../../microservice/database/connect'
+import Sequelize from 'sequelize'
 import ManagementModel from '../../microservice/database/model/management'
 const PROTO_PATH = path.join(__dirname, '../../proto/management.proto')
-console.log(PROTO_PATH)
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
@@ -28,7 +28,6 @@ const managementModel = ManagementModel(db)
 const List = async (call, callback) => {
   // const condition = first_name ? { first_name: { [Op.like]: `%${first_name}%` } } : null;
 
-  // Tanulók listázása adatbázisból
   try {
     const result = await managementModel.findAll()
     callback(null, { managements: result })
@@ -67,12 +66,12 @@ const ReadByProjectID = async (call, callback) => {
   let project_id = call.request.project_id
 
   try {
-    let result = await managementModel.findAll({
-      where: {
-        project_id: Number(project_id)
-      }
-    })
-    if (result) {
+    let result = await db.sequelize.query(
+      `SELECT management.id, management.project_id, student.first_name, management.student_id, student.last_name, project.name as project_name, project.description as project_description from management as management INNER JOIN students as student on management.student_id = student.id INNER JOIN projects as project on management.project_id = project.id where management.project_id = ${project_id}`,
+      { type: Sequelize.QueryTypes.SELECT }
+    )
+    if (result.length > 0) {
+
       callback(null, { managements: result })
     }
     else {
@@ -92,13 +91,11 @@ const ReadByProjectID = async (call, callback) => {
 // Implement the function which get all the entires which has the student_id value equal to the project_id from the call
 const ReadByStudentID = async (call, callback) => {
   let student_id = call.request.student_id
-
   try {
-    let result = await managementModel.findAll({
-      where: {
-        student_id: Number(student_id)
-      }
-    })
+    let result = await db.sequelize.query(
+      `SELECT management.id, management.project_id, student.first_name, management.student_id, student.last_name, project.name as project_name, project.description as project_description from management as management INNER JOIN students as student on management.student_id = student.id INNER JOIN projects as project on management.project_id = project.id where management.student_id = ${student_id}`,
+      { type: Sequelize.QueryTypes.SELECT }
+    )
     if (result) {
       callback(null, { managements: result })
     }
