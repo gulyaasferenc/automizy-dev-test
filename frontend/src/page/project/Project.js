@@ -23,7 +23,7 @@ import "../../layout/Layout.css"
 const Project = () => {
   const [reloadListTrigger, setReloadListTrigger] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  // Új tanuló hozzáadása gombra kattintás
+  // Új project hozzáadása gombra kattintás
   const onClickAddNewProject = () => {
     setShowModal(true)
   }
@@ -100,7 +100,7 @@ const ListProject = ({ reloadListTrigger }) => {
     },
     [trigger, reloadListTrigger]
   )
-  // Adott tanuló törlésére kattinttás
+  // Adott project törlésére kattinttás
   const onClickDeleteProject = ({ name, id }) => {
     confirm({
       title: 'Are you sure delete this project?',
@@ -165,7 +165,7 @@ const ListProject = ({ reloadListTrigger }) => {
     </Spin>
   )
 }
-// Új tanuló felvitele
+// Új project felvitele
 const AddProjectModal = ({
   visible,
   onClickCancel,

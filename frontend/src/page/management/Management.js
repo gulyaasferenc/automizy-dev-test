@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Row, Col, Spin, Empty, List, Typography, Button, Modal, message } from 'antd'
+import { Layout, Row, Col, Divider, Spin, Empty, List, Typography, Button, Modal, message } from 'antd'
 const { Title } = Typography
 const { Header, Content } = Layout
 
@@ -7,7 +7,15 @@ const Management=()=>{
     return (
       <Layout>
         <Header className="header">
-            <Title>Management Handler</Title>
+          <Row>
+            <Col span={18}><Title>Management Handler</Title></Col>
+            <Col span={6}>
+              <Button>By Students</Button>
+              <Divider type="vertical" />
+              <Button>By Projects</Button>
+            </Col>
+          </Row>
+            
         </Header>
         <Content className="content">
           Write frontend code here
@@ -15,5 +23,7 @@ const Management=()=>{
       </Layout>
     )
 }
+
+
 
 export default Management
