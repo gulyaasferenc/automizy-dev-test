@@ -194,7 +194,7 @@ const AddProjectModal = ({
     })
       .then(() => {
         form.resetFields()
-        onDone({ name: first_name + ' ' + last_name })
+        onDone({ name: name })
       })
       .catch((err) => {
         if (err.response.status === 409) {
