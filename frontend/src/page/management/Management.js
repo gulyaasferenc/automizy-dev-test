@@ -7,7 +7,6 @@ const { Title, strong } = Typography
 const { Header, Content } = Layout
 import ByStudents from '../../components/management/ByStudents'
 import ByProjects from '../../components/management/ByProjects'
-import AssociateModal from '../../components/management/AssociateModal'
 
 const Management = () => {
 
@@ -34,7 +33,6 @@ const Management = () => {
       </Header>
       <Content className="content">
         {activeMenu === 'student' ? <ByStudents /> : <ByProjects />}
-        <AssociateModal visible={modalVisible} />
       </Content>
     </Layout>
   )

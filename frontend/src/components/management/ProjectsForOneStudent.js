@@ -50,7 +50,7 @@ const ProjectsForOneStudent = ({ student_id }) => {
   // Project törlése
   const deleteProject = ({ id, name }) => {
     setSpinner(true)
-    axios.delete('api/project/' + id)
+    axios.delete('api/management/' + id)
       .then(res => {
         message.success('The following project has been deleted: ' + name)
         setSpinner(false)
@@ -65,11 +65,10 @@ const ProjectsForOneStudent = ({ student_id }) => {
   return (
     <Row>
       {studentAssociations.complete && studentAssociations.data && studentAssociations.data.length ? <List
-      span={24}
         dataSource={studentAssociations.data}
         renderItem={item => (
           <List.Item>
-            <Row justify="center" span={24}>
+            <Row className="card-list" justify="center" span={24}>
               <Col span={20}>
                 <strong>
                   {item.project_name}

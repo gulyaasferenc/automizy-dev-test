@@ -69,7 +69,7 @@ const StudentsForProject = ({project_id}) => {
         dataSource={projectAssociations.data}
         renderItem={item => (
           <List.Item>
-            <Row justify="center" span={24}>
+            <Row className="card-list" justify="center" span={24}>
               <Col span={20}>
                 <strong>
                   {`${item.first_name} ${item.last_name}`}

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, message } from 'antd'
+import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, message, Tooltip } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import axios from 'axios'
+import AssociateModal from './AssociateModal'
+import StudentsForProject from './StudentsForProject'
 const { confirm } = Modal
 const { Title, strong } = Typography
 const { Header, Content } = Layout
-import StudentsForProject from './StudentsForProject'
+
 
 
 const ByProjects = () => {
@@ -15,6 +17,9 @@ const ByProjects = () => {
     error: false
   })
   const [spinner, setSpinner] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [inputId, setInputId] = useState(null)
+  const [myKey, setMyKey] = useState(0)
 
   useEffect(() => {
     setSpinner(true)
@@ -38,7 +43,20 @@ const ByProjects = () => {
         })
       })
 
-  }, [setProjects])
+  }, [setProjects, myKey])
+
+  const openModal = (id) => {
+    setInputId(id)
+    setModalVisible(true)
+  }
+
+  const onModalCancel = () => {
+    let currentKey = myKey
+    setModalVisible(false)
+    setMyKey(currentKey + 1)
+    console.log(myKey)
+  }
+
   return (
     <Spin
       size="large"
@@ -48,16 +66,13 @@ const ByProjects = () => {
         dataSource={projects.data}
         renderItem={item => (
           <List.Item>
-            <Card title={item.name}>
-              <Row>
-                <Col span={24}>
-                  <StudentsForProject project_id={item.id} />
-                </Col>
-              </Row>
+            <Card title={item.name} extra={<Tooltip title="Assign Student"><Button onClick={() => {openModal(item.id)}}>+</Button></Tooltip>}>
+              <StudentsForProject project_id={item.id} />
             </Card>
           </List.Item>
         )}
       /> : <Empty />}
+      <AssociateModal visible={modalVisible} onCancel={onModalCancel} inputId={inputId} items='students' />
     </Spin>
   )
 }
