@@ -7,7 +7,7 @@ import management from './management'
 // Documentation
 // https://expressjs.com/en/api.html#router
 
-// Hallgatókat kezelő útvonalak
+// Define the 3 branches
 router.use('/student', student)
 router.use('/project', project)
 router.use('/management', management)

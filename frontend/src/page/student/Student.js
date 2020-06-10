@@ -47,7 +47,7 @@ const Student = () => {
               type="primary"
               onClick={onClickAddNewStudent}>
               Add new Student
-                        </Button>
+            </Button>
           </Col>
         </Row>
       </Header>
