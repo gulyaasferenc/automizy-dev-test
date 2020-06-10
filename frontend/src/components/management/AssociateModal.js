@@ -54,7 +54,7 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
         })
       })
   }, [0])
-  
+
   return (
     <Spin
       size="large"
@@ -70,12 +70,12 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
           style={{ width: 200 }}
           placeholder={items === "students" ? "Select a Student" : "Select a Project"}
           optionFilterProp="children"
-          onChange={(e) => { setSelectedItem(e.target) }}
+          onChange={(event) => { console.log(event); setSelectedItem(JSON.parse(event)) }}
           filterOption={(input, option) =>
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {allItems.data.map((x, i) => {return <Option key={i} value={JSON.stringify(x)} >{x.first_name}</Option>} )}
+          {allItems.data.map((x, i) => { return <Option key={i} value={JSON.stringify(x)} >{x.first_name}</Option> })}
         </Select>
         <Divider />
         <p>Some contents...</p>
