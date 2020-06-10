@@ -54,21 +54,7 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
         })
       })
   }, [0])
-
-  let options
-  useEffect(() => {
-    if (allItems.data.length) {
-      console.log(allItems.data)
-      options = allItems.data.map((x, i) => {
-        return <Option key={i} value={x} >{x.first_name}</Option>
-      })
-    } else {
-      options = <Option value="default" >Waiting for option items</Option>
-    }
-    console.log(options)
-  }, [allItems])
-
-
+  
   return (
     <Spin
       size="large"
@@ -89,7 +75,7 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {allItems.data.map((x, i) => {return <Option key={i} value={x} >{x.first_name}</Option>} )}
+          {allItems.data.map((x, i) => {return <Option key={i} value={JSON.stringify(x)} >{x.first_name}</Option>} )}
         </Select>
         <Divider />
         <p>Some contents...</p>
