@@ -6,7 +6,7 @@ const { confirm } = Modal
 const { Title, strong } = Typography
 const { Header, Content } = Layout
 
-const StudentsForProject = ({project_id}) => {
+const StudentsForProject = ({project_id, onCancel}) => {
   const [projectAssociations, setProjectAssociations] = useState({
     data: null,
     complete: false,
@@ -24,7 +24,7 @@ const StudentsForProject = ({project_id}) => {
         })
       })
       .catch(err => {
-        console.error(err)
+        console.log(err)
         setProjectAssociations({
           data: null,
           error: true,
@@ -44,28 +44,25 @@ const StudentsForProject = ({project_id}) => {
       onOk() {
         deleteStudent({ name: name, id: id })
       },
-      onCancel() { }
+      onCancel() { onCancel }
     })
   }
   // Project törlése
   const deleteStudent = ({ id, name }) => {
-    setSpinner(true)
     axios.delete('api/management/' + id)
       .then(res => {
         message.success('The following project has been deleted: ' + name)
-        setSpinner(false)
-        setTrigger(new Date().getTime())
+        onCancel()
       }
       )
-      .catch(() =>
-        setSpinner(false)
+      .catch((error) =>
+        console.error(error)
       )
   }
 
   return (
     <Row>
       {projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ? <List
-      span={24}
         dataSource={projectAssociations.data}
         renderItem={item => (
           <List.Item>

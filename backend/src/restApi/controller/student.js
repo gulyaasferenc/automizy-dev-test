@@ -83,6 +83,10 @@ exports.create = async (req, res, next) => {
         res.status(409).json({
           error: err.metadata.getMap()
         })
+        case 'CUSTOM_ALREADY_EXISTS':
+          res.status(409).json({
+            error: 'Student with this email already exists'
+          })
         break
       default:
         res.status(500).json(err)

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, Select } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Spin, Modal, Select } from 'antd'
 import axios from 'axios'
-const { confirm } = Modal
-const { Title, strong } = Typography
 const { Option } = Select
 
 const AssociateModal = ({ items, visible, inputId, onCancel }) => {
@@ -60,27 +57,23 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
       size="large"
       spinning={!allItems.completed}>
       <Modal
-        title="Basic Modal"
+        title={items === "projects" ? "Select project to assign" : "Select student to assign"}
         visible={visible}
         onOk={onOk}
         onCancel={onCancel}
       >
         <Select
           showSearch
-          style={{ width: 200 }}
+          style={{ width: '100%' }}
           placeholder={items === "students" ? "Select a Student" : "Select a Project"}
           optionFilterProp="children"
-          onChange={(event) => { console.log(event); setSelectedItem(JSON.parse(event)) }}
+          onChange={(event) => { setSelectedItem(JSON.parse(event)) }}
           filterOption={(input, option) =>
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {allItems.data.map((x, i) => { return <Option key={i} value={JSON.stringify(x)} >{x.first_name}</Option> })}
+          {allItems.data.map((x, i) => { return <Option key={i} value={JSON.stringify(x)} >{x.first_name ? `${x.first_name} ${x.last_name}` : x.name}</Option> })}
         </Select>
-        <Divider />
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
       </Modal>
     </Spin>
 

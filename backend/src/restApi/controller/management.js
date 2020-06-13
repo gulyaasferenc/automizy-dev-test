@@ -8,7 +8,10 @@ const PROTO_PATH = path.join(__dirname, '../../proto/management.proto')
 exports.validationRules = (method) => {
   switch (method) {
     case 'create': {
-      return [body('student_id').not().isEmpty()]
+      return [
+        body('student_id').not().isEmpty(),
+        body('project_id').not().isEmpty()
+      ]
     }
   }
 }
@@ -73,12 +76,17 @@ exports.create = async (req, res, next) => {
     })
     res.status(201).json(result)
   } catch (err) {
+    console.log('MYERROR',err)
     switch (err?.details) {
       case 'ALREADY_EXISTS':
         res.status(409).json({
           error: err.metadata.getMap()
         })
         break
+      case 'CUSTOM_ALREADY_EXISTS':
+        res.status(409).json({
+          error: 'Assignment already exists'
+        })
       default:
         res.status(500).json(err)
     }

@@ -65,9 +65,9 @@ const ByProjects = () => {
         grid={{ gutter: 16, column: 4 }}
         dataSource={projects.data}
         renderItem={item => (
-          <List.Item>
+          <List.Item key={myKey}>
             <Card title={item.name} extra={<Tooltip title="Assign Student"><Button onClick={() => {openModal(item.id)}}>+</Button></Tooltip>}>
-              <StudentsForProject project_id={item.id} />
+              <StudentsForProject onCancel={onModalCancel} project_id={item.id} />
             </Card>
           </List.Item>
         )}

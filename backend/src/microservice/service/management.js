@@ -42,9 +42,23 @@ const List = async (call, callback) => {
 // Implement the insert function
 const Create = async (call, callback) => {
   let management = call.request
+  console.log('MANAGEMENT', management)
   try {
-    let result = await managementModel.create(management)
-    callback(null, result)
+    let isExisting = await managementModel.findAndCountAll({
+      where: {
+        student_id: Number(management.student_id),
+        project_id: Number(management.project_id)
+      }
+    })
+    if (isExisting.count > 0) {
+      callback({
+        code: grpc.status.ALREADY_EXISTS,
+        details: 'CUSTOM_ALREADY_EXISTS'
+      })
+    } else {
+      let result = await managementModel.create(management)
+      callback(null, result)
+    }
   } catch (err) {
     switch (err.name) {
       case 'SequelizeUniqueConstraintError':

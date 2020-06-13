@@ -12,11 +12,13 @@ import {
   Modal,
   message,
   Form,
-  Input
+  Input,
+  Collapse
 } from 'antd'
 const { Title } = Typography
 const { Header, Content } = Layout
 const { confirm } = Modal
+const { Panel } = Collapse
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import "../../layout/Layout.css"
 
@@ -101,7 +103,7 @@ const ListProject = ({ reloadListTrigger }) => {
     [trigger, reloadListTrigger]
   )
   // Adott project törlésére kattinttás
-  const onClickDeleteProject = ({ name, id }) => {
+  const onClickDeleteProject = ({ event, name, id }) => {
     confirm({
       title: 'Are you sure delete this project?',
       icon: <ExclamationCircleOutlined />,
@@ -114,6 +116,7 @@ const ListProject = ({ reloadListTrigger }) => {
       },
       onCancel() { }
     })
+    event.stopPropagation()
   }
   // Project törlése
   const deleteProject = ({ id, name }) => {
@@ -138,25 +141,20 @@ const ListProject = ({ reloadListTrigger }) => {
           {(list.complete && (
             list.data &&
               list.data.projects.length ?
-              <List
-                bordered
-                dataSource={list.data.projects}
-                renderItem={item => (
-                  <List.Item>
-                    <Typography.Text strong>
-                      {item.name}
-                    </Typography.Text>
-                    <Typography.Text>
-                      {item.description}
-                    </Typography.Text>
-                    <Button
-                      type="primary"
-                      onClick={({ id = item.id, name = item.name }) => onClickDeleteProject({ id: id, name: name })}>
-                      Delete
-                    </Button>
-                  </List.Item>
-                )}
-              />
+              <Collapse>
+                {list.data.projects.map((item, i) => {
+                  return (
+                    <Panel key={i} header={item.name} extra={(
+                      <Button
+                        type="primary"
+                        onClick={(event = event, id = item.id, name = item.name) => onClickDeleteProject({ event: event, id: id, name: name })}>
+                        Delete
+                      </Button>
+                    )}>
+                      <div>{item.description}</div>
+                    </Panel>)
+                })}
+              </Collapse>
               :
               <Empty />
           ))}

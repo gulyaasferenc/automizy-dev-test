@@ -5,7 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom"
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, message } from 'antd'
 import {
   UserOutlined,
   BookOutlined,
@@ -17,8 +17,9 @@ import Student from '../page/student/Student'
 import Project from '../page/project/Project'
 import Management from '../page/management/Management'
 
-import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3000/'
+import createAxios from '../config/axiosInterceptor'
+createAxios()
+// axios.defaults.baseURL = 'http://localhost:3000/'
 
 const App = () => {
   const [collapsed, setCollapsed] = useState(false)
