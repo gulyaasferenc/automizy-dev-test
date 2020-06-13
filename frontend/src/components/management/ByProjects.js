@@ -61,7 +61,9 @@ const ByProjects = () => {
     <Spin
       size="large"
       spinning={spinner}>
-      {projects.data && projects.complete && projects.data.length ? <List
+      {projects.complete && projects.error ?
+      <div>Something went wrong!</div> 
+      : projects.data && projects.complete && projects.data.length ? <List
         grid={{ gutter: 16, column: 4 }}
         dataSource={projects.data}
         renderItem={item => (

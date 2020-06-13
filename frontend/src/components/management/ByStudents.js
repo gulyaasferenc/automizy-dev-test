@@ -59,7 +59,9 @@ const ByStudents = () => {
     <Spin
       size="large"
       spinning={spinner}>
-      {students.data && students.complete && students.data.length ? <List
+      {students.complete && students.data.error ? 
+      <div>Something went wrong!</div>
+      :students.data && students.complete && students.data.length ? <List
         grid={{ gutter: 16, column: 4 }}
         dataSource={students.data}
         renderItem={item => (

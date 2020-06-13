@@ -6,17 +6,21 @@ const { confirm } = Modal
 const { Title, strong } = Typography
 const { Header, Content } = Layout
 
-const StudentsForProject = ({project_id, onCancel}) => {
+const StudentsForProject = ({ project_id, onCancel }) => {
   const [projectAssociations, setProjectAssociations] = useState({
     data: null,
     complete: false,
     error: false
   })
 
+  const [spinner, setSpinner] = useState(false)
+
+
   useEffect(() => {
+    setSpinner(true)
     axios.get(`api/management/project/${project_id}`)
       .then(res => {
-        console.log(res.data)
+        setSpinner(false)
         setProjectAssociations({
           data: res.data.managements,
           complete: true,
@@ -24,6 +28,7 @@ const StudentsForProject = ({project_id, onCancel}) => {
         })
       })
       .catch(err => {
+        setSpinner(false)
         console.log(err)
         setProjectAssociations({
           data: null,
@@ -62,29 +67,39 @@ const StudentsForProject = ({project_id, onCancel}) => {
 
   return (
     <Row>
-      {projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ? <List
-        dataSource={projectAssociations.data}
-        renderItem={item => (
-          <List.Item>
-            <Row className="card-list" justify="center" span={24}>
-              <Col span={20}>
-                <strong>
-                  {`${item.first_name} ${item.last_name}`}
-                </strong>
-              </Col>
-              <Col span={4}>
-                <Button
-                  size="small"
-                  type="primary"
-                  onClick={({ id = item.id, name = `${item.first_name} ${item.last_name}`, }) => onClickDeleteStudentfromProject({ id: id, name: name })}>
-                  Delete
+      <Spin
+        size="small"
+        spinning={spinner}
+      >
+        {projectAssociations.complete && projectAssociations.data.error ?
+          <div>Something went wrong!</div>
+          : 
+            projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ? <List
+              dataSource={projectAssociations.data}
+              renderItem={item => (
+                <List.Item>
+                  <Row className="card-list" justify="center" span={24}>
+                    <Col span={20}>
+                      <strong>
+                        {`${item.first_name} ${item.last_name}`}
+                      </strong>
+                    </Col>
+                    <Col span={4}>
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={({ id = item.id, name = `${item.first_name} ${item.last_name}`, }) => onClickDeleteStudentfromProject({ id: id, name: name })}>
+                        Delete
                 </Button>
-              </Col>
-            </Row>
+                    </Col>
+                  </Row>
 
-          </List.Item>
-        )}
-      /> : <Empty />}
+                </List.Item>
+              )}
+            /> : <Empty />
+          }
+      </Spin>
+
     </Row>
   )
 }

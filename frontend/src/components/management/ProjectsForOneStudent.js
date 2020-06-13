@@ -13,7 +13,10 @@ const ProjectsForOneStudent = ({ student_id, onCancel }) => {
     error: false
   })
 
+  const [spinner, setSpinner] = useState(false)
+
   useEffect(() => {
+    setSpinner(true)
     axios.get(`api/management/student/${student_id}`)
       .then(res => {
         console.log(res.data)
@@ -22,8 +25,10 @@ const ProjectsForOneStudent = ({ student_id, onCancel }) => {
           complete: true,
           error: false
         })
+        setSpinner(false)
       })
       .catch(err => {
+        setSpinner(false)
         console.error(err)
         setStudentAssociations({
           data: null,
@@ -62,29 +67,37 @@ const ProjectsForOneStudent = ({ student_id, onCancel }) => {
 
   return (
     <Row>
-      {studentAssociations.complete && studentAssociations.data && studentAssociations.data.length ? <List
-        dataSource={studentAssociations.data}
-        renderItem={item => (
-          <List.Item>
-            <Row className="card-list" justify="center" span={24}>
-              <Col span={20}>
-                <strong>
-                  {item.project_name}
-                </strong>
-              </Col>
-              <Col span={4}>
-                <Button
-                  size="small"
-                  type="primary"
-                  onClick={({ id = item.id, name = item.project_name, }) => onClickDeleteProjectFromUser({ id: id, name: name })}>
-                  Delete
+      <Spin
+        size="small"
+        spinning={spinner}
+      >
+        {studentAssociations.complete && studentAssociations.data.error ?
+          <div>Something went wrong!</div>
+          : studentAssociations.complete && studentAssociations.data && studentAssociations.data.length ? <List
+            dataSource={studentAssociations.data}
+            renderItem={item => (
+              <List.Item>
+                <Row className="card-list" justify="center" span={24}>
+                  <Col span={20}>
+                    <strong>
+                      {item.project_name}
+                    </strong>
+                  </Col>
+                  <Col span={4}>
+                    <Button
+                      size="small"
+                      type="primary"
+                      onClick={({ id = item.id, name = item.project_name, }) => onClickDeleteProjectFromUser({ id: id, name: name })}>
+                      Delete
                 </Button>
-              </Col>
-            </Row>
+                  </Col>
+                </Row>
 
-          </List.Item>
-        )}
-      /> : <Empty />}
+              </List.Item>
+            )}
+          /> : <Empty />}
+      </Spin>
+
     </Row>
   )
 }
