@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, message } from 'antd'
+import { Row, Col, Spin, Empty, List, Button, Modal, message } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import axios from 'axios'
 const { confirm } = Modal
-const { Title, strong } = Typography
-const { Header, Content } = Layout
 
 const ProjectsForOneStudent = ({ student_id, onCancel }) => {
   const [studentAssociations, setStudentAssociations] = useState({

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, Tooltip } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Spin, Empty, List, Card, Button, Modal, Tooltip } from 'antd'
 import axios from 'axios'
-const { confirm } = Modal
-const { Title, strong } = Typography
-const { Header, Content } = Layout
 import ProjectsForOneStudent from './ProjectsForOneStudent'
 import AssociateModal from './AssociateModal'
 
@@ -59,7 +55,7 @@ const ByStudents = () => {
     <Spin
       size="large"
       spinning={spinner}>
-      {students.complete && students.data.error ? 
+      {students.complete && students.error ? 
       <div>Something went wrong!</div>
       :students.data && students.complete && students.data.length ? <List
         grid={{ gutter: 16, column: 4 }}

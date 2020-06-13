@@ -6,21 +6,15 @@ import {
   Col,
   Spin,
   Empty,
-  List,
-  Typography,
   Button,
   Modal,
   message,
-  Form,
-  Input,
+
   Collapse
 } from 'antd'
-const { Title } = Typography
-const { Header, Content } = Layout
 const { confirm } = Modal
 const { Panel } = Collapse
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import "../../layout/Layout.css"
 
 const ListProject = ({ reloadListTrigger }) => {
   const [trigger, setTrigger] = useState()
@@ -98,7 +92,9 @@ const ListProject = ({ reloadListTrigger }) => {
       spinning={loader}>
       <Row style={{ marginTop: 8, marginBottom: 8 }}>
         <Col span={24}>
-          {(list.complete && (
+          {(list.complete && list.error ? 
+          <div>Something went wrong!</div>
+          : list.complete && (
             list.data &&
               list.data.projects.length ?
               <Collapse>

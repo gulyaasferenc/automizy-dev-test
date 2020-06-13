@@ -10,7 +10,7 @@ const setupAxiosInterceptors = () => {
   }, function (error) {
     // add error message to the page if http request fails
     message.error({
-      content: error.response.data.error ? error.response.data.error : error.message,
+      content: error.response && error.response.data && error.response.data.error ? error.response.data.error : error.message,
       style: {
         marginTop: '5rem'
       }

@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, message, Tooltip } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { Spin, Empty, List, Card, Button, Tooltip } from 'antd'
 import axios from 'axios'
 import AssociateModal from './AssociateModal'
 import StudentsForProject from './StudentsForProject'
-const { confirm } = Modal
-const { Title, strong } = Typography
-const { Header, Content } = Layout
-
-
 
 const ByProjects = () => {
   const [projects, setProjects] = useState({

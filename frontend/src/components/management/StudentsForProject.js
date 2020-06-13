@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, message } from 'antd'
+import { Layout, Row, Col, Spin, Empty, List, Button, Modal, message } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import axios from 'axios'
 const { confirm } = Modal
-const { Title, strong } = Typography
-const { Header, Content } = Layout
 
 const StudentsForProject = ({ project_id, onCancel }) => {
   const [projectAssociations, setProjectAssociations] = useState({
@@ -14,7 +12,6 @@ const StudentsForProject = ({ project_id, onCancel }) => {
   })
 
   const [spinner, setSpinner] = useState(false)
-
 
   useEffect(() => {
     setSpinner(true)
@@ -71,10 +68,9 @@ const StudentsForProject = ({ project_id, onCancel }) => {
         size="small"
         spinning={spinner}
       >
-        {projectAssociations.complete && projectAssociations.data.error ?
+        {projectAssociations.complete && projectAssociations.error ?
           <div>Something went wrong!</div>
-          : 
-            projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ? <List
+          : projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ? <List
               dataSource={projectAssociations.data}
               renderItem={item => (
                 <List.Item>

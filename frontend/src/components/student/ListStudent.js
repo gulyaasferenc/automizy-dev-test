@@ -93,7 +93,8 @@ const ListStudent = ({ reloadListTrigger }) => {
       spinning={loader}>
       <Row style={{ marginTop: 8, marginBottom: 8 }}>
         <Col span={24}>
-          {(list.complete && (
+          {(list.complete && list.error ? <div>Something went wrong!</div>
+          : list.complete && (
             list.data &&
               list.data.students.length ?
               <List

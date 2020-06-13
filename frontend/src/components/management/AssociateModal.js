@@ -45,7 +45,7 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
       })
       .catch(err => {
         setAllItems({
-          data: res.data[specifics.prop],
+          data: null,
           error: true,
           completed: true
         })
@@ -56,7 +56,7 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
     <Spin
       size="large"
       spinning={!allItems.completed}>
-      <Modal
+      {allItems.completed && allItems.error ? null : <Modal
         title={items === "projects" ? "Select project to assign" : "Select student to assign"}
         visible={visible}
         onOk={onOk}
@@ -74,7 +74,7 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
         >
           {allItems.data.map((x, i) => { return <Option key={i} value={JSON.stringify(x)} >{x.first_name ? `${x.first_name} ${x.last_name}` : x.name}</Option> })}
         </Select>
-      </Modal>
+      </Modal>}
     </Spin>
 
   )

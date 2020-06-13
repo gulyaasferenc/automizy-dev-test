@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Divider, Spin, Empty, List, Card, Typography, Button, Modal, message } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-import axios from 'axios'
-const { confirm } = Modal
-const { Title, strong } = Typography
+import React, { useState } from 'react'
+import { Layout, Row, Col, Divider, Typography, Button} from 'antd'
+const { Title } = Typography
 const { Header, Content } = Layout
 import ByStudents from '../../components/management/ByStudents'
 import ByProjects from '../../components/management/ByProjects'
@@ -11,12 +8,11 @@ import ByProjects from '../../components/management/ByProjects'
 const Management = () => {
 
   const [activeMenu, setActiveMenu] = useState('student')
-  const [modalVisible, setModalVisible] = useState(false)
-  const onStudentClick = () => {
-    setActiveMenu('student')
-  }
-  const onProjectClick = () => {
-    setActiveMenu('project')
+  const onSelectClick = (select) => {
+    setActiveMenu(select)
+    setTimeout( () => {
+      console.log(activeMenu)
+    }, 1200)
   }
 
   return (
@@ -25,9 +21,9 @@ const Management = () => {
         <Row>
           <Col span={18}><Title>Handle Students and Projects Associations</Title></Col>
           <Col span={6}>
-            <Button type={activeMenu === "student" ? "primary" : "default"} onClick={onStudentClick}>By Students</Button>
+            <Button type={activeMenu === "student" ? "primary" : "default"} onClick={() => onSelectClick('student')}>By Students</Button>
             <Divider type="vertical" />
-            <Button type={activeMenu === "project" ? "primary" : "default"} onClick={onProjectClick}>By Projects</Button>
+            <Button type={activeMenu === "project" ? "primary" : "default"} onClick={() => onSelectClick('project')}>By Projects</Button>
           </Col>
         </Row>
       </Header>
