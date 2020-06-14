@@ -1,0 +1,60 @@
+version: '3.7'
+
+services:
+  sqldb:
+    image: percona
+    ports:
+      - 3308:3306
+    restart: always
+    command: --max_allowed_packet=32505856
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: app
+#    volumes:
+#      - ./database/migrations:/docker-entrypoint-initdb.d/
+
+  management-server:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.management
+    command: ./wait_for sqldb:3306 -t 100 -- node ./microservice/service/management.js
+    ports: 
+      - 50055:50055
+    
+
+  project-server:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.project
+    command: ./wait_for sqldb:3306 -t 100 -- node ./microservice/service/project.js
+    ports: 
+      - 50054:50054
+
+  student-server:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.student
+    command: ./wait_for sqldb:3306 -t 100 -- node ./microservice/service/student.js
+    ports: 
+      - 50053:50053
+
+  node-server:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.restApi
+    ports: 
+      - 3000:3000
+    depends_on:
+      - management-server
+      - student-server
+      - project-server
+
+  react-frontend:
+    build: ./frontend
+    ports: 
+      - 8080:80
+
+
+      

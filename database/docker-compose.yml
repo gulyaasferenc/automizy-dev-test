@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  db:
+  sqldb:
     image: percona
     ports:
       - 3308:3306
@@ -12,4 +12,4 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: app
 #    volumes:
-#      - ./migrations:/docker-entrypoint-initdb.d/
+#      - ./database/migrations:/docker-entrypoint-initdb.d/

@@ -1,0 +1,9 @@
+FROM node:10
+WORKDIR /usr/src/app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn
+COPY ./src/ .
+EXPOSE 50054
+# CMD [ "./wait_for", "mysql://sqldb:3306", "-t", "100", "--", "node", "./microservice/service/project.js" ]

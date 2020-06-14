@@ -95,7 +95,7 @@ const ListStudent = ({ reloadListTrigger }) => {
         <Col span={24}>
           {(list.complete && list.error ? <div>Something went wrong!</div>
           : list.complete && (
-            list.data &&
+            list.data  && list.data.students &&
               list.data.students.length ?
               <List
                 bordered
