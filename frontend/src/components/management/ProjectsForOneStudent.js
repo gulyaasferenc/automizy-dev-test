@@ -17,7 +17,6 @@ const ProjectsForOneStudent = ({ student_id, onCancel }) => {
     setSpinner(true)
     axios.get(`api/management/student/${student_id}`)
       .then(res => {
-        console.log(res.data)
         setStudentAssociations({
           data: res.data.managements,
           complete: true,

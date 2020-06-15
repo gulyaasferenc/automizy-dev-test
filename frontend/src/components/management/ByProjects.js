@@ -19,7 +19,6 @@ const ByProjects = () => {
     setSpinner(true)
     axios.get('api/project')
       .then(res => {
-        console.log(res.data)
         setSpinner(false)
         setProjects({
           data: res.data.projects,
@@ -28,7 +27,7 @@ const ByProjects = () => {
         })
       })
       .catch(err => {
-        console.error(err)
+        console.log(err)
         setSpinner(false)
         setProjects({
           data: null,
@@ -48,7 +47,6 @@ const ByProjects = () => {
     let currentKey = myKey
     setModalVisible(false)
     setMyKey(currentKey + 1)
-    console.log(myKey)
   }
 
   return (

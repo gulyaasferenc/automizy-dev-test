@@ -20,7 +20,6 @@ const ByStudents = () => {
     setSpinner(true)
     axios.get('api/student')
       .then(res => {
-        console.log(res.data)
         setSpinner(false)
         setStudents({
           data: res.data.students,
@@ -29,7 +28,7 @@ const ByStudents = () => {
         })
       })
       .catch(err => {
-        console.error(err)
+        console.log(err)
         setSpinner(false)
         setStudents({
           data: null,
@@ -49,7 +48,6 @@ const ByStudents = () => {
     let currentKey = myKey
     setModalVisible(false)
     setMyKey(currentKey + 1)
-    console.log(myKey)
   }
   return (
     <Spin

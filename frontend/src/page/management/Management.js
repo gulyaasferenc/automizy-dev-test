@@ -10,9 +10,6 @@ const Management = () => {
   const [activeMenu, setActiveMenu] = useState('student')
   const onSelectClick = (select) => {
     setActiveMenu(select)
-    setTimeout( () => {
-      console.log(activeMenu)
-    }, 1200)
   }
 
   return (

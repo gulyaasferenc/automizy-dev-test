@@ -58,7 +58,7 @@ const StudentsForProject = ({ project_id, onCancel }) => {
       }
       )
       .catch((error) =>
-        console.error(error)
+        console.log(error)
       )
   }
 
