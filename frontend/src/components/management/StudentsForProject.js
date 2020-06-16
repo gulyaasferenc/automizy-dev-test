@@ -67,35 +67,32 @@ const StudentsForProject = ({ project_id, onCancel }) => {
       <Spin
         size="small"
         spinning={spinner}
-      >
-        {projectAssociations.complete && projectAssociations.error ?
-          <div>Something went wrong!</div>
-          : projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ? <List
-              dataSource={projectAssociations.data}
-              renderItem={item => (
-                <List.Item>
-                  <Row className="card-list" justify="center" span={24}>
-                    <Col span={20}>
-                      <strong>
-                        {`${item.first_name} ${item.last_name}`}
-                      </strong>
-                    </Col>
-                    <Col span={4}>
-                      <Button
-                        size="small"
-                        type="primary"
-                        onClick={({ id = item.id, name = `${item.first_name} ${item.last_name}`, }) => onClickDeleteStudentfromProject({ id: id, name: name })}>
-                        Delete
-                </Button>
-                    </Col>
-                  </Row>
-
-                </List.Item>
-              )}
-            /> : <Empty />
-          }
-      </Spin>
-
+        style={{ margin: 'auto' }}
+      />
+      {projectAssociations.complete && projectAssociations.error ?
+        <div>Something went wrong!</div>
+        : projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ?
+          projectAssociations.data.map((item, i) => {
+            return (
+              <Row key={i} className="card-list" justify="space-between" span={24} style={{marginBottom: '1rem'}}>
+                <Col span={18}>
+                  <strong>
+                    {`${item.first_name} ${item.last_name}`}
+                  </strong>
+                </Col>
+                <Col span={6}>
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={({ id = item.id, name = `${item.first_name} ${item.last_name}`, }) => onClickDeleteStudentfromProject({ id: id, name: name })}>
+                    Delete
+                  </Button>
+                </Col>
+              </Row>
+            )
+          })
+          : <Empty />
+        }
     </Row>
   )
 }

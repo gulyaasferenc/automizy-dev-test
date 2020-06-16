@@ -45,7 +45,7 @@ const Project = () => {
       </Header>
       <Content className="content">
         <ListProject reloadListTrigger={reloadListTrigger} />
-        <AddProjectModal visible={showModal} onClickCancel={onClickCancel} onDone={onDone} />
+        {showModal ? <AddProjectModal onClickCancel={onClickCancel} onDone={onDone} /> : null}
       </Content>
     </Layout>
   )

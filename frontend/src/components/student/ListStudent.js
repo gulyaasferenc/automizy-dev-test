@@ -10,17 +10,22 @@ import {
   Typography,
   Button,
   Modal,
+  Divider,
   message,
 } from 'antd'
 const { Title } = Typography
 const { confirm } = Modal
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import AddStudentModal from './AddStudentModal'
 import "../../layout/Layout.css"
 
 
 const ListStudent = ({ reloadListTrigger }) => {
   const [trigger, setTrigger] = useState()
   const [loader, setLoader] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [itemToModal, setItemToModal] = useState(null)
+
 
   const [list, setList] = useState({
     data: null,
@@ -87,6 +92,19 @@ const ListStudent = ({ reloadListTrigger }) => {
         setLoader(false)
       )
   }
+  const onClickEditStudent = (inItem) => {
+    setItemToModal(inItem)
+    setShowModal(true)
+  }
+
+  const onClickCancel = () => {
+    setShowModal(false)
+  }
+  const onDone = ({ name }) => {
+    setShowModal(false)
+    setTrigger(new Date().getTime())
+    message.success('The following student has been saved: ' + name)
+  }
   return (
     <Spin
       size="large"
@@ -94,31 +112,44 @@ const ListStudent = ({ reloadListTrigger }) => {
       <Row style={{ marginTop: 8, marginBottom: 8 }}>
         <Col span={24}>
           {(list.complete && list.error ? <div>Something went wrong!</div>
-          : list.complete && (
-            list.data  && list.data.students &&
-              list.data.students.length ?
-              <List
-                bordered
-                dataSource={list.data.students}
-                renderItem={item => (
-                  <List.Item>
-                    <Typography.Text strong>
-                      {item.first_name} {item.last_name}
-                    </Typography.Text>
-                    <Typography.Text>
-                      {item.email}
-                    </Typography.Text>
-                    <Button
-                      type="primary"
-                      onClick={({ id = item.id, name = item.first_name + " " + item.last_name }) => onClickDeleteStudent({ id: id, name: name })}>
-                      Delete
+            : list.complete && (
+              list.data && list.data.students &&
+                list.data.students.length ?
+                <List
+                  bordered
+                  dataSource={list.data.students}
+                  renderItem={item => (
+                    <List.Item>
+                      <Col span={20} >
+                        <Typography.Text strong>
+                          {item.first_name} {item.last_name}
+                        </Typography.Text>
+                        <Divider type="vertical" />
+                        <Typography.Text>
+                          {item.email}
+                        </Typography.Text>
+                      </Col>
+                      <Col span={4} style={{textAlign: "right"}}>
+                        <Button
+                          type="primary"
+                          onClick={({ inItem = item }) => onClickEditStudent(inItem)}>
+                          Edit
+                      </Button>
+                        <Divider type="vertical" />
+                        <Button
+                          type="danger"
+                          onClick={({ id = item.id, name = item.first_name + " " + item.last_name }) => onClickDeleteStudent({ id: id, name: name })}>
+                          Delete
                     </Button>
-                  </List.Item>
-                )}
-              />
-              :
-              <Empty />
-          ))}
+                      </Col>
+
+                    </List.Item>
+                  )}
+                />
+                :
+                <Empty />
+            ))}
+          {showModal ? <AddStudentModal item={itemToModal} onClickCancel={onClickCancel} onDone={onDone} /> : null}
         </Col>
       </Row>
     </Spin>

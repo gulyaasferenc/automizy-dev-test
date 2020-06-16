@@ -8,10 +8,11 @@ import {
 } from 'antd'
 
 const AddStudentModal = ({
-  visible,
+  item,
   onClickCancel,
   onDone
 }) => {
+  console.log(item)
   const [form] = Form.useForm()
 
   const onClickSave = () => {
@@ -30,34 +31,38 @@ const AddStudentModal = ({
   }
   // Tanuló mentése
   const saveStudent = ({ first_name, last_name, email }) => {
-    axios.post('api/student', {
-      'first_name': first_name,
-      'last_name': last_name,
-      'email': email
-    })
-      .then(() => {
-        form.resetFields()
-        onDone({ name: first_name + ' ' + last_name })
+    if (item && item.id) {
+      axios.put(`api/student/${item.id}`, {
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email
       })
-      .catch((err) => {
-        if (err.response.status === 409) {
-          setDuplicationErrorMessage({ name: err.response.data.error })
-        } else {
-        }
+        .then(() => {
+          form.resetFields()
+          onDone({ name: first_name + ' ' + last_name })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
+      axios.post('api/student', {
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email
       })
+        .then(() => {
+          form.resetFields()
+          onDone({ name: first_name + ' ' + last_name })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
-  const setDuplicationErrorMessage = ({ name }) => {
-    console.log(name)
-    form.setFields([
-      {
-        name: Object.keys(name)[0],
-        errors: ["Alredy exists"]
-      }
-    ])
-  }
+
   return (
     <Modal
-      visible={visible}
+      visible={true}
       title="Add new student"
       onCancel={onClickCancel}
       footer={[
@@ -70,12 +75,18 @@ const AddStudentModal = ({
       ]}
     >
       <Form
+        key={item}
         form={form}
         layout="vertical"
+        initialValues={{
+          first_name: item && item.first_name ? item.first_name : null,
+          last_name: item && item.last_name ? item.last_name : null,
+          email: item && item.email ? item.email : null
+        }}
       >
         <Form.Item
           label={'First name'}
-          name="first_name"
+          name='first_name'
           rules={[{ required: true, message: 'Please type student first name!' }]}
         >
           <Input
@@ -89,7 +100,8 @@ const AddStudentModal = ({
         >
           <Input
             autoComplete='off'
-            placeholder="Last name" />
+            placeholder="Last name"
+          />
         </Form.Item>
         <Form.Item
           label={'Email address'}
@@ -98,7 +110,8 @@ const AddStudentModal = ({
         >
           <Input
             autoComplete='off'
-            placeholder="Email address" />
+            placeholder="Email address"
+          />
         </Form.Item>
       </Form>
     </Modal>

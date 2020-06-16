@@ -17,9 +17,8 @@ import Student from '../page/student/Student'
 import Project from '../page/project/Project'
 import Management from '../page/management/Management'
 
-import createAxios from '../config/axiosInterceptor'
-createAxios()
-// axios.defaults.baseURL = 'http://localhost:3000/'
+import setAxios from '../config/axiosInterceptor'
+setAxios()
 
 const App = () => {
   const [collapsed, setCollapsed] = useState(false)

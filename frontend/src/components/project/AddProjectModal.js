@@ -9,7 +9,7 @@ import {
 const { TextArea } = Input
 
 const AddProjectModal = ({
-  visible,
+  item,
   onClickCancel,
   onDone
 }) => {
@@ -30,33 +30,37 @@ const AddProjectModal = ({
   }
   // Project mentése
   const saveProject = ({ name, description }) => {
-    axios.post('api/project', {
-      'name': name,
-      'description': description
-    })
-      .then(() => {
-        form.resetFields()
-        onDone({ name: name })
+    if (item && item.id) {
+      axios.put(`api/project/${item.id}`, {
+        'name': name,
+        'description': description
       })
-      .catch((err) => {
-        if (err.response.status === 409) {
-          setDuplicationErrorMessage({ name: err.response.data.error })
-        } else {
-        }
+        .then(() => {
+          form.resetFields()
+          onDone({ name: name })
+        })
+        .catch((err) => {
+          console.log(error)
+        })
+    } else {
+      axios.post('api/project', {
+        'name': name,
+        'description': description
       })
+        .then(() => {
+          form.resetFields()
+          onDone({ name: name })
+        })
+        .catch((err) => {
+          console.log(error)
+        })
+    }
+
   }
-  const setDuplicationErrorMessage = ({ name }) => {
-    console.log(name)
-    form.setFields([
-      {
-        name: Object.keys(name)[0],
-        errors: ["Alredy exists"]
-      }
-    ])
-  }
+  
   return (
     <Modal
-      visible={visible}
+      visible={true}
       title="Add new project"
       onCancel={onClickCancel}
       footer={[
@@ -71,6 +75,10 @@ const AddProjectModal = ({
       <Form
         form={form}
         layout="vertical"
+        initialValues={{
+          name: item && item.name ? item.name : null,
+          description: item && item.description ? item.description : null
+        }}
       >
         <Form.Item
           label={'Name'}
@@ -79,7 +87,8 @@ const AddProjectModal = ({
         >
           <Input
             autoComplete='off'
-            placeholder="Name" />
+            placeholder="Name"
+            />
         </Form.Item>
         <Form.Item
           label={'Description'}
@@ -88,7 +97,8 @@ const AddProjectModal = ({
         >
           <TextArea
             autoComplete='off'
-            placeholder="Description" />
+            placeholder="Description"
+            />
         </Form.Item>
       </Form>
     </Modal>

@@ -9,16 +9,19 @@ import {
   Button,
   Modal,
   message,
-
+  Divider,
   Collapse
 } from 'antd'
 const { confirm } = Modal
 const { Panel } = Collapse
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import AddProjectModal from './AddProjectModal'
 
 const ListProject = ({ reloadListTrigger }) => {
   const [trigger, setTrigger] = useState()
   const [loader, setLoader] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [itemToModal, setItemToModal] = useState(null)
 
   const [list, setList] = useState({
     data: null,
@@ -86,37 +89,61 @@ const ListProject = ({ reloadListTrigger }) => {
         setLoader(false)
       )
   }
+
+  const onClickEditProject = ({event, inItem}) => {
+    setItemToModal(inItem)
+    setShowModal(true)
+    event.stopPropagation()
+  }
+
+  const onClickCancel = () => {
+    setShowModal(false)
+  }
+  const onDone = ({ name }) => {
+    setShowModal(false)
+    setTrigger(new Date().getTime())
+    message.success('The following project has been saved: ' + name)
+  }
+
   return (
     <Spin
       size="large"
       spinning={loader}>
       <Row style={{ marginTop: 8, marginBottom: 8 }}>
         <Col span={24}>
-          {(list.complete && list.error ? 
-          <div>Something went wrong!</div>
-          : list.complete && (
-            list.data &&
-              list.data.projects.length ?
-              <Collapse>
-                {list.data.projects.map((item, i) => {
-                  return (
-                    <Panel key={i} header={item.name} extra={(
-                      <Button
-                        type="primary"
-                        onClick={(event = event, id = item.id, name = item.name) => onClickDeleteProject({ event: event, id: id, name: name })}>
-                        Delete
-                      </Button>
-                    )}>
+          {(list.complete && list.error ?
+            <div>Something went wrong!</div>
+            : list.complete && (
+              list.data &&
+                list.data.projects.length ?
+                <Collapse>
+                  {list.data.projects.map((item, i) => {
+                    return (
+                      <Panel key={i} header={item.name} extra={(
+                        <div>
+                          <Button
+                            type="primary"
+                            onClick={(event = event, inItem = item) => onClickEditProject({event: event, inItem: inItem})}>
+                            Edit
+                          </Button>
+                          <Divider type="vertical" />
+                          <Button
+                            type="danger"
+                            onClick={(event = event, id = item.id, name = item.name) => onClickDeleteProject({ event: event, id: id, name: name })}>
+                            Delete
+                          </Button>
+                        </div>)} >
                       <div>{item.description}</div>
-                    </Panel>)
-                })}
-              </Collapse>
-              :
-              <Empty />
-          ))}
+                      </Panel>)
+                  })}
+                </Collapse>
+                :
+                <Empty />
+            ))}
         </Col>
+        {showModal ? <AddProjectModal item={itemToModal} onClickCancel={onClickCancel} onDone={onDone} /> : null}
       </Row>
-    </Spin>
+    </Spin >
   )
 }
 

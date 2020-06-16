@@ -46,7 +46,7 @@ const Student = () => {
       </Header>
       <Content className="content">
         <ListStudent reloadListTrigger={reloadListTrigger} />
-        <AddStudentModal visible={showModal} onClickCancel={onClickCancel} onDone={onDone} />
+        { showModal ? <AddStudentModal item={null} onClickCancel={onClickCancel} onDone={onDone} /> : null}
       </Content>
     </Layout>
   )

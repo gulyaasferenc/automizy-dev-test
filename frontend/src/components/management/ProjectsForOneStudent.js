@@ -63,38 +63,36 @@ const ProjectsForOneStudent = ({ student_id, onCancel }) => {
   }
 
   return (
-    <Row>
+    <Row span={24} justify="space-between">
       <Spin
         size="small"
         spinning={spinner}
-      >
-        {studentAssociations.complete && studentAssociations.data.error ?
-          <div>Something went wrong!</div>
-          : studentAssociations.complete && studentAssociations.data && studentAssociations.data.length ? <List
-            dataSource={studentAssociations.data}
-            renderItem={item => (
-              <List.Item>
-                <Row className="card-list" justify="center" span={24}>
-                  <Col span={20}>
-                    <strong>
-                      {item.project_name}
-                    </strong>
-                  </Col>
-                  <Col span={4}>
-                    <Button
-                      size="small"
-                      type="primary"
-                      onClick={({ id = item.id, name = item.project_name, }) => onClickDeleteProjectFromUser({ id: id, name: name })}>
-                      Delete
+        span={24}
+        style={{ margin: 'auto' }}
+      />
+      {studentAssociations.complete && studentAssociations.data.error ?
+        <div>Something went wrong!</div>
+        : studentAssociations.complete && studentAssociations.data && studentAssociations.data.length ?
+          studentAssociations.data.map((item, i) => {
+            return (
+              <Row key={i} className="card-list" justify="space-between" span={24} style={{ marginBottom: '1rem' }}>
+                <Col span={18}>
+                  <strong>
+                    {item.project_name}
+                  </strong>
+                </Col>
+                <Col span={6}>
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={({ id = item.id, name = item.project_name, }) => onClickDeleteProjectFromUser({ id: id, name: name })}>
+                    Delete
                 </Button>
-                  </Col>
-                </Row>
-
-              </List.Item>
-            )}
-          /> : <Empty />}
-      </Spin>
-
+                </Col>
+              </Row>
+            )
+          })
+          : <Empty />}
     </Row>
   )
 }
