@@ -16,8 +16,8 @@ const Management = () => {
     <Layout>
       <Header className="header">
         <Row>
-          <Col span={18}><Title>Handle Students and Projects Associations</Title></Col>
-          <Col span={6}>
+          <Col span={19}><Title>Handle Students and Projects Associations</Title></Col>
+          <Col span={5}>
             <Button type={activeMenu === "student" ? "primary" : "default"} onClick={() => onSelectClick('student')}>By Students</Button>
             <Divider type="vertical" />
             <Button type={activeMenu === "project" ? "primary" : "default"} onClick={() => onSelectClick('project')}>By Projects</Button>
