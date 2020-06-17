@@ -13,6 +13,8 @@ import project from '../controller/project'
 
 // GET request for list of all items
 router.get('/', project.list)
+// GET project by search
+router.get('/search/:name', project.list)
 // POST request for create an item
 router.post('/', project.validationRules('create'), project.validate, project.create)
 // GET request for read an item by id

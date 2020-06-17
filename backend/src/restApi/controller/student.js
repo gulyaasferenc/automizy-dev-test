@@ -43,6 +43,7 @@ const studentProto = grpc.loadPackageDefinition(packageDefinition).student
 const client = new studentProto.StudentService(config.student.host + ':' + config.student.port, grpc.credentials.createInsecure())
 
 const studentList = (options) => {
+  console.log(options)
   return new Promise((resolve, reject) => {
     client.List(options, (error, response) => {
       if (error) { reject(error) }
@@ -53,7 +54,11 @@ const studentList = (options) => {
 
 exports.list = async (req, res, next) => {
   try {
-    let result = await studentList()
+    const options = {
+      name: req.params.name ? req.params.name : null
+    }
+    console.log(options)
+    let result = await studentList(options)
     res.status(200).json(result)
   } catch (e) {
     res.json(e)

@@ -2,13 +2,16 @@ syntax = "proto3";
 package project;
 
 service ProjectService {
-   rpc List (Empty) returns (ProjectList) {}
+   rpc List (ProjectName) returns (ProjectList) {}
    rpc Create (Project) returns (Project) {}
    rpc Read (ProjectRequestId) returns (Project) {}
    rpc Update (Project) returns (Empty) {}
    rpc Delete (ProjectRequestId) returns (Empty) {}
 }
 message Empty {}
+message ProjectName {
+   string name = 1;
+}
 message Project {
    string id = 1;
    string name = 2;

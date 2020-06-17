@@ -2,13 +2,16 @@ syntax = "proto3";
 package student;
 
 service StudentService {
-   rpc List (Empty) returns (StudentList) {}
+   rpc List (StudentName) returns (StudentList) {}
    rpc Create (Student) returns (Student) {}
    rpc Read (StudentRequestId) returns (Student) {}
    rpc Update (Student) returns (Empty) {}
    rpc Delete (StudentRequestId) returns (Empty) {}
 }
 message Empty {}
+message StudentName {
+   string name = 1;
+}
 message Student {
    string id = 1;
    string first_name = 2;

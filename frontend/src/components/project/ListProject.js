@@ -10,9 +10,11 @@ import {
   Modal,
   message,
   Divider,
-  Collapse
+  Collapse,
+  Input
 } from 'antd'
 const { confirm } = Modal
+const { Search } = Input
 const { Panel } = Collapse
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import AddProjectModal from './AddProjectModal'
@@ -22,6 +24,7 @@ const ListProject = ({ reloadListTrigger }) => {
   const [loader, setLoader] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [itemToModal, setItemToModal] = useState(null)
+  const [searchValue, setSearchValue] = useState(null)
 
   const [list, setList] = useState({
     data: null,
@@ -37,7 +40,13 @@ const ListProject = ({ reloadListTrigger }) => {
         error: false,
         complete: false
       })
-      axios.get('api/project')
+      let endpoint = ''
+    if (searchValue) {
+      endpoint = `api/project/search/${searchValue}`
+    } else {
+      endpoint = 'api/project'
+    }
+      axios.get(endpoint)
         .then(res => {
           setLoader(false)
           setList({
@@ -57,7 +66,7 @@ const ListProject = ({ reloadListTrigger }) => {
         }
         )
     },
-    [trigger, reloadListTrigger]
+    [trigger, reloadListTrigger, searchValue]
   )
   // Adott project törlésére kattinttás
   const onClickDeleteProject = ({ event, name, id }) => {
@@ -105,10 +114,19 @@ const ListProject = ({ reloadListTrigger }) => {
     message.success('The following project has been saved: ' + name)
   }
 
+  const onSearch = (value) => {
+    setSearchValue(value)
+  }
+
   return (
     <Spin
       size="large"
       spinning={loader}>
+         <Search
+        placeholder="Enter project name"
+        enterButton="Search"
+        size="large"
+        onSearch={value => onSearch(value)} />
       <Row style={{ marginTop: 8, marginBottom: 8 }}>
         <Col span={24}>
           {(list.complete && list.error ?

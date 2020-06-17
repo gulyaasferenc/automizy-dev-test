@@ -12,9 +12,11 @@ import {
   Modal,
   Divider,
   message,
+  Input
 } from 'antd'
 const { Title } = Typography
 const { confirm } = Modal
+const { Search } = Input
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import AddStudentModal from './AddStudentModal'
 import "../../layout/Layout.css"
@@ -25,13 +27,14 @@ const ListStudent = ({ reloadListTrigger }) => {
   const [loader, setLoader] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [itemToModal, setItemToModal] = useState(null)
-
+  const [searchValue, setSearchValue] = useState(null)
 
   const [list, setList] = useState({
     data: null,
     complete: false,
     error: false
   })
+
   // Tanulók betöltése
   useEffect(
     () => {
@@ -41,7 +44,13 @@ const ListStudent = ({ reloadListTrigger }) => {
         error: false,
         complete: false
       })
-      axios.get('api/student')
+      let endpoint = ''
+      if (searchValue) {
+        endpoint = `api/student/search/${searchValue}`
+      } else {
+        endpoint = 'api/student'
+      }
+      axios.get(endpoint)
         .then(res => {
           setLoader(false)
           setList({
@@ -61,8 +70,10 @@ const ListStudent = ({ reloadListTrigger }) => {
         }
         )
     },
-    [trigger, reloadListTrigger]
+    [searchValue, trigger, reloadListTrigger]
   )
+
+
   // Adott tanuló törlésére kattinttás
   const onClickDeleteStudent = ({ name, id }) => {
     confirm({
@@ -105,10 +116,18 @@ const ListStudent = ({ reloadListTrigger }) => {
     setTrigger(new Date().getTime())
     message.success('The following student has been saved: ' + name)
   }
+  const onSearch = (value) => {
+    setSearchValue(value)
+  }
   return (
     <Spin
       size="large"
       spinning={loader}>
+      <Search
+        placeholder="Enter user first name OR last name"
+        enterButton="Search"
+        size="large"
+        onSearch={value => onSearch(value)} />
       <Row style={{ marginTop: 8, marginBottom: 8 }}>
         <Col span={24}>
           {(list.complete && list.error ? <div>Something went wrong!</div>
@@ -129,7 +148,7 @@ const ListStudent = ({ reloadListTrigger }) => {
                           {item.email}
                         </Typography.Text>
                       </Col>
-                      <Col span={4} style={{textAlign: "right"}}>
+                      <Col span={4} style={{ textAlign: "right" }}>
                         <Button
                           type="primary"
                           onClick={({ inItem = item }) => onClickEditStudent(inItem)}>

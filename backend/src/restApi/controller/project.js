@@ -52,7 +52,10 @@ const projectList = (options) => {
 
 exports.list = async (req, res, next) => {
   try {
-    let result = await projectList()
+    const options = {
+      name: req.params.name ? req.params.name : null
+    }
+    let result = await projectList(options)
     res.status(200).json(result)
   } catch (e) {
     res.status(500).json(e)

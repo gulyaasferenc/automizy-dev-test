@@ -13,6 +13,8 @@ import student from '../controller/student'
 
 // GET request for list of all items
 router.get('/', student.list)
+// GET student by search
+router.get('/search/:name', student.list)
 // POST request for create an item
 router.post('/', student.validationRules('create'), student.validate, student.create)
 // GET request for read an item by id

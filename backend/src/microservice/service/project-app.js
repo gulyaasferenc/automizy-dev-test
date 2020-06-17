@@ -25,13 +25,18 @@ const managementModel = ManagementModel(db)
 
 // Implement the list function
 const List = async (call, callback) => {
-  //const Op = db.DataType.Op
-  //const condition = first_name ? { first_name: { [Op.like]: `%${first_name}%` } } : null;
+  const name = call.request.name
+  const Op = db.DataType.Op
+  const condition = name ? {
+    name: {
+      [Op.like]: `%${name}%`
+    }
+  } : null;
 
-  // Tanulók listázása adatbázisból
+  // Projectek listázása adatbázisból
   try {
-    //const result = await projectModel.findAll({ where: condition })
-    const result = await projectModel.findAll()
+    const result = await projectModel.findAll({ where: condition })
+    // const result = await projectModel.findAll()
     callback(null, { projects: result })
   }
   catch (err) {
