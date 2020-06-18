@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Row, Col, Spin, Empty, List, Button, Modal, message } from 'antd'
+import { Tooltip, Row, Col, Spin, Empty, Button, Modal, message } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import axios from 'axios'
 const { confirm } = Modal
@@ -33,7 +33,7 @@ const StudentsForProject = ({ project_id, onCancel }) => {
           complete: true
         })
       })
-  }, [0])
+  }, [0, project_id])
 
   const onClickDeleteStudentfromProject = ({ name, id }) => {
     confirm({
@@ -74,11 +74,11 @@ const StudentsForProject = ({ project_id, onCancel }) => {
         : projectAssociations.complete && projectAssociations.data && projectAssociations.data.length ?
           projectAssociations.data.map((item, i) => {
             return (
-              <Row key={i} className="card-list" justify="space-between" span={24} style={{marginBottom: '1rem'}}>
+              <Row key={i} className="card-list" justify="space-between" span={24} style={{ marginBottom: '1rem' }}>
                 <Col span={18}>
-                  <strong>
-                    {`${item.first_name} ${item.last_name}`}
-                  </strong>
+                  <Tooltip title={item.email}>
+                    <div><strong>{`${item.first_name} ${item.last_name}`}</strong></div>
+                  </Tooltip>
                 </Col>
                 <Col span={6}>
                   <Button
@@ -92,7 +92,7 @@ const StudentsForProject = ({ project_id, onCancel }) => {
             )
           })
           : <Empty />
-        }
+      }
     </Row>
   )
 }

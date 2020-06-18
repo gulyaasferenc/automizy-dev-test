@@ -16,6 +16,7 @@ const ByStudents = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [inputId, setInputId] = useState(null)
   const [myKey, setMyKey] = useState(0)
+  const [triggerKey, setTriggerKey] = useState(0)
   const [searchValue, setSearchValue] = useState(null)
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const ByStudents = () => {
           complete: true,
           error: false
         })
+        setTriggerKey(triggerKey + 1)
       })
       .catch(err => {
         console.log(err)
@@ -43,6 +45,7 @@ const ByStudents = () => {
           error: true,
           complete: true
         })
+        setTriggerKey(triggerKey + 1)
       })
 
   }, [setStudents, myKey, searchValue])
@@ -64,21 +67,22 @@ const ByStudents = () => {
   return (
     <Spin
       size="large"
-      spinning={spinner}>
+      spinning={spinner}
+    >
       <Search
-        placeholder="Enter user first name OR last name"
+        placeholder="Enter student email"
         enterButton="Search"
         size="large"
         onSearch={value => onSearch(value)}
-        style={{marginBottom: '1rem'}} />
+        style={{ marginBottom: '1rem' }} />
       {students.complete && students.error ?
         <div>Something went wrong!</div>
         : students.data && students.complete && students.data.length ? <List
           grid={{ gutter: 16, column: 4 }}
           dataSource={students.data}
           renderItem={item => (
-            <List.Item key={myKey}>
-              <Card title={`${item.first_name} ${item.last_name}`} extra={<Tooltip title="Assign Project"><Button onClick={() => { openModal(item.id) }}>+</Button></Tooltip>}>
+            <List.Item key={triggerKey ? triggerKey : 1}>
+              <Card title={<Tooltip title={item.email}>{item.first_name} {item.last_name}</Tooltip>} extra={<Tooltip title="Assign Project"><Button onClick={() => { openModal(item.id) }}>+</Button></Tooltip>}>
                 <ProjectsForOneStudent onCancel={onModalCancel} student_id={item.id} />
               </Card>
             </List.Item>

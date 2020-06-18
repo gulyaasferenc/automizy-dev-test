@@ -15,7 +15,7 @@ const StudentModel = ({
     },
     last_name: {
       type: STRING,
-      unique: true,
+      unique: false,
       allowNull: false
     },
     email: {

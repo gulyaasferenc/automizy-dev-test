@@ -5,6 +5,7 @@ const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
 const PROTO_PATH = path.join(__dirname, '../../proto/project.proto')
 
+// check mandatory props
 exports.validationRules = (method) => {
   switch (method) {
     case 'create': {
@@ -41,6 +42,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const projectProto = grpc.loadPackageDefinition(packageDefinition).project
 const client = new projectProto.ProjectService(config.project.host + ':' + config.project.port, grpc.credentials.createInsecure())
 
+// call List from project microservice
 const projectList = (options) => {
   return new Promise((resolve, reject) => {
     client.List(options, (error, response) => {
@@ -55,6 +57,7 @@ exports.list = async (req, res, next) => {
     const options = {
       name: req.params.name ? req.params.name : null
     }
+    // pass options/filter which will be used by the microservice
     let result = await projectList(options)
     res.status(200).json(result)
   } catch (e) {
@@ -62,6 +65,7 @@ exports.list = async (req, res, next) => {
   }
 }
 
+// create new project
 const projectCreate = (options) => {
   return new Promise((resolve, reject) => {
     client.Create(options, (error, response) => {
@@ -95,6 +99,7 @@ exports.create = async (req, res, next) => {
   }
 }
 
+// get project by id - currently not in use
 const projectRead = (options) => {
   return new Promise((resolve, reject) => {
     client.Read(options, (error, response) => {
@@ -120,6 +125,7 @@ exports.read = async (req, res, next) => {
   }
 }
 
+// update project
 const projectUpdate = (options) => {
   return new Promise((resolve, reject) => {
     client.Update(options, (error, response) => {
@@ -147,6 +153,7 @@ exports.update = async (req, res, next) => {
   }
 }
 
+// delete project
 const projectDelete = (options) => {
   return new Promise((resolve, reject) => {
     client.Delete(options, (error, response) => {

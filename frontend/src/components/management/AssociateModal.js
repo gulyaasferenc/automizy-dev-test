@@ -72,7 +72,7 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {allItems.data.map((x, i) => { return <Option key={i} value={JSON.stringify(x)} >{x.first_name ? `${x.first_name} ${x.last_name}` : x.name}</Option> })}
+          {allItems.data.map((x, i) => { return <Option key={i} value={JSON.stringify(x)} >{x.first_name ? `${x.first_name} ${x.last_name} (${x.email})` : x.name}</Option> })}
         </Select>
       </Modal>}
     </Spin>

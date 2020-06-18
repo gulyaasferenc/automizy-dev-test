@@ -143,32 +143,6 @@ exports.readByProject = async (req, res, next) => {
   }
 }
 
-const managementUpdate = (options) => {
-  return new Promise((resolve, reject) => {
-    client.Update(options, (error, response) => {
-      if (error) { reject(error) }
-      resolve(response)
-    })
-  })
-}
-
-exports.update = async (req, res, next) => {
-  try {
-    let result = await managementUpdate({
-      "student_id": req.body.student_id,
-      "project_id": req.body.first_name
-    })
-    res.status(200).json({ id: req.params.id })
-  } catch (e) {
-    if (e.details === 'Not found') {
-      res.status(204).json(e)
-    }
-    else {
-      res.status(500).json(e)
-    }
-  }
-}
-
 const managementDelete = (options) => {
   return new Promise((resolve, reject) => {
     client.Delete(options, (error, response) => {

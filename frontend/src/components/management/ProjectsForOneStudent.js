@@ -33,7 +33,7 @@ const ProjectsForOneStudent = ({ student_id, onCancel }) => {
           complete: true
         })
       })
-  }, [0])
+  }, [0, student_id])
 
   const onClickDeleteProjectFromUser = ({ name, id }) => {
     confirm({

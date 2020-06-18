@@ -81,7 +81,7 @@ const ReadByProjectID = async (call, callback) => {
 
   try {
     let result = await db.sequelize.query(
-      `SELECT management.id, management.project_id, student.first_name, management.student_id, student.last_name, project.name as project_name, project.description as project_description from management as management INNER JOIN students as student on management.student_id = student.id INNER JOIN projects as project on management.project_id = project.id where management.project_id = ${project_id}`,
+      `SELECT management.id, management.project_id, student.first_name, management.student_id, student.last_name, student.email, project.name as project_name, project.description as project_description from management as management INNER JOIN students as student on management.student_id = student.id INNER JOIN projects as project on management.project_id = project.id where management.project_id = ${project_id}`,
       { type: Sequelize.QueryTypes.SELECT }
     )
     if (result.length > 0) {
@@ -107,7 +107,7 @@ const ReadByStudentID = async (call, callback) => {
   let student_id = call.request.student_id
   try {
     let result = await db.sequelize.query(
-      `SELECT management.id, management.project_id, student.first_name, management.student_id, student.last_name, project.name as project_name, project.description as project_description from management as management INNER JOIN students as student on management.student_id = student.id INNER JOIN projects as project on management.project_id = project.id where management.student_id = ${student_id}`,
+      `SELECT management.id, management.project_id, student.first_name, management.student_id, student.last_name, student.email, project.name as project_name, project.description as project_description from management as management INNER JOIN students as student on management.student_id = student.id INNER JOIN projects as project on management.project_id = project.id where management.student_id = ${student_id}`,
       { type: Sequelize.QueryTypes.SELECT }
     )
     if (result) {
@@ -127,35 +127,6 @@ const ReadByStudentID = async (call, callback) => {
   }
 }
 
-// Implement the update function
-const Update = async (call, callback) => {
-  let management = call.request
-  try {
-    let affectedRows = await managementModel.update(
-      {
-        "student_id": management.student_id,
-        "management_id": management.management_id
-      },
-      {
-        where: { student_id: management.student_id }
-      }
-    )
-    if (affectedRows[0]) {
-      callback(null, affectedRows)
-    }
-    else {
-      callback({
-        code: grpc.status.NOT_FOUND,
-        details: "Not found"
-      })
-    }
-  } catch (err) {
-    callback({
-      code: grpc.status.ABORTED,
-      details: "Aborted"
-    })
-  }
-}
 // Implement the delete function
 const Delete = async (call, callback) => {
   let id = call.request.id
@@ -192,7 +163,6 @@ const exposedFunctions = {
   Create,
   ReadByProjectID,
   ReadByStudentID,
-  Update,
   Delete
 }
 

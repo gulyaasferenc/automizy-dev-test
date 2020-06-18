@@ -15,6 +15,7 @@ const ByProjects = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [inputId, setInputId] = useState(null)
   const [myKey, setMyKey] = useState(0)
+  const [triggerKey, setTriggerKey] = useState(0)
   const [searchValue, setSearchValue] = useState(null)
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const ByProjects = () => {
           complete: true,
           error: false
         })
+        setTriggerKey(triggerKey + 1)
       })
       .catch(err => {
         console.log(err)
@@ -42,6 +44,7 @@ const ByProjects = () => {
           error: true,
           complete: true
         })
+        setTriggerKey(triggerKey + 1)
       })
 
   }, [setProjects, myKey, searchValue])
@@ -64,21 +67,24 @@ const ByProjects = () => {
   return (
     <Spin
       size="large"
-      spinning={spinner}>
+      spinning={spinner}
+    >
       <Search
         placeholder="Enter project name"
         enterButton="Search"
         size="large"
-        onSearch={value => onSearch(value)} />
+        onSearch={value => onSearch(value)} 
+        style={{ marginBottom: '1rem' }} />
       {projects.complete && projects.error ?
         <div>Something went wrong!</div>
         : projects.data && projects.complete && projects.data.length ? <List
+          
           grid={{ gutter: 16, column: 4 }}
           dataSource={projects.data}
           renderItem={item => (
-            <List.Item key={myKey}>
+            <List.Item key={triggerKey ? triggerKey : 1}>
               <Card title={item.name} extra={<Tooltip title="Assign Student"><Button onClick={() => { openModal(item.id) }}>+</Button></Tooltip>}>
-                <StudentsForProject key={searchValue} onCancel={onModalCancel} project_id={item.id} />
+                <StudentsForProject onCancel={onModalCancel} project_id={item.id} />
               </Card>
             </List.Item>
           )}

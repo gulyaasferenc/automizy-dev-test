@@ -12,7 +12,6 @@ const AddStudentModal = ({
   onClickCancel,
   onDone
 }) => {
-  console.log(item)
   const [form] = Form.useForm()
 
   const onClickSave = () => {

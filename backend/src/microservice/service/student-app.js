@@ -24,23 +24,17 @@ const managementModel = ManagementModel(db)
 
 // Implement the list function
 const List = async (call, callback) => {
-  const name = call.request.name
+  const email = call.request.email
   const Op = db.DataType.Op
-  const condition = name ? {
-    [Op.or]: {
-      first_name: {
-        [Op.like]: `%${name}%`
-      },
-      last_name: {
-        [Op.like]: `%${name}%`
-      }
+  const condition = email ? {
+    email: {
+      [Op.like]: `%${email}%`
     }
   } : null;
 
-  // Tanulók listázása adatbázisból
+  // List students from the DB
   try {
     const result = await studentModel.findAll({ where: condition })
-    // const result = await studentModel.findAll()
     callback(null, { students: result })
   }
   catch (err) {
@@ -87,9 +81,6 @@ const Create = async (call, callback) => {
 // Implement the read function
 const Read = async (call, callback) => {
   let id = call.request.id
-  // data validation
-  // ...
-  // Kontakt mentése adatbázisba
   try {
     let result = await studentModel.findByPk(id)
     if (result) {
@@ -143,6 +134,7 @@ const Update = async (call, callback) => {
 const Delete = async (call, callback) => {
   let id = call.request.id
   try {
+    // also delete the related management items
     await managementModel.destroy({ where: { "student_id": id } })
     let result = await studentModel.destroy({ where: { "id": id } })
     if (result) {

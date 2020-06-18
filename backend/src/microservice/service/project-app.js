@@ -33,7 +33,7 @@ const List = async (call, callback) => {
     }
   } : null;
 
-  // Projectek listázása adatbázisból
+  // List projects from DB
   try {
     const result = await projectModel.findAll({ where: condition })
     // const result = await projectModel.findAll()
@@ -83,9 +83,6 @@ const Create = async (call, callback) => {
 // Implement the read function
 const Read = async (call, callback) => {
   let id = call.request.id
-  // data validation
-  // ...
-  // Kontakt mentése adatbázisba
   try {
     let result = await projectModel.findByPk(id)
     if (result) {
@@ -137,6 +134,7 @@ const Update = async (call, callback) => {
 const Delete = async (call, callback) => {
   let id = call.request.id
   try {
+    // also delete the related management entries
     await managementModel.destroy({ where: { "project_id": id } })
     let result = await projectModel.destroy({ where: { "id": id } })
     if (result) {

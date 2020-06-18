@@ -5,6 +5,7 @@ const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
 const PROTO_PATH = path.join(__dirname, '../../proto/student.proto')
 
+// check mandatory props
 exports.validationRules = (method) => {
   switch (method) {
     case 'create': {
@@ -42,8 +43,8 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const studentProto = grpc.loadPackageDefinition(packageDefinition).student
 const client = new studentProto.StudentService(config.student.host + ':' + config.student.port, grpc.credentials.createInsecure())
 
+// call List from student microservice
 const studentList = (options) => {
-  console.log(options)
   return new Promise((resolve, reject) => {
     client.List(options, (error, response) => {
       if (error) { reject(error) }
@@ -55,9 +56,9 @@ const studentList = (options) => {
 exports.list = async (req, res, next) => {
   try {
     const options = {
-      name: req.params.name ? req.params.name : null
+      email: req.params.email ? req.params.email : null
     }
-    console.log(options)
+    // pass options which will be used by the microservice
     let result = await studentList(options)
     res.status(200).json(result)
   } catch (e) {
@@ -65,6 +66,7 @@ exports.list = async (req, res, next) => {
   }
 }
 
+// create student
 const studentCreate = (options) => {
   return new Promise((resolve, reject) => {
     client.Create(options, (error, response) => {
@@ -76,6 +78,7 @@ const studentCreate = (options) => {
 
 exports.create = async (req, res, next) => {
   try {
+    // pass options which will be used by the microservice
     let result = await studentCreate({
       "first_name": req.body.first_name,
       "last_name": req.body.last_name,
@@ -88,10 +91,10 @@ exports.create = async (req, res, next) => {
         res.status(409).json({
           error: err.metadata.getMap()
         })
-        case 'CUSTOM_ALREADY_EXISTS':
-          res.status(409).json({
-            error: 'Student with this email already exists'
-          })
+      case 'CUSTOM_ALREADY_EXISTS':
+        res.status(409).json({
+          error: 'Student with this email already exists'
+        })
         break
       default:
         res.status(500).json(err)
@@ -99,6 +102,7 @@ exports.create = async (req, res, next) => {
   }
 }
 
+// get student by id, currently not in use
 const studentRead = (options) => {
   return new Promise((resolve, reject) => {
     client.Read(options, (error, response) => {
@@ -124,6 +128,7 @@ exports.read = async (req, res, next) => {
   }
 }
 
+// update student data
 const studentUpdate = (options) => {
   return new Promise((resolve, reject) => {
     client.Update(options, (error, response) => {
@@ -142,16 +147,26 @@ exports.update = async (req, res, next) => {
       "email": req.body.email
     })
     res.status(200).json({ id: req.params.id })
-  } catch (e) {
-    if (e.details === 'Not found') {
+  } catch (err) {
+    if (err.details === 'Not found') {
       res.status(204).json(e)
     }
     else {
-      res.status(500).json(e)
+      switch (err?.details) {
+        // email must be unique, but a user friendly message is a good idea
+        case 'CUSTOM_ALREADY_EXISTS':
+          res.status(409).json({
+            error: 'Student with this email already exists'
+          })
+          break
+        default:
+          res.status(500).json(err)
+      }
     }
   }
 }
 
+// delet student
 const studentDelete = (options) => {
   return new Promise((resolve, reject) => {
     client.Delete(options, (error, response) => {

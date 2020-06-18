@@ -1,45 +1,51 @@
 {
 	"info": {
-		"_postman_id": "63f51008-0ef6-4bad-a070-100a8f2868e0",
+		"_postman_id": "48e2addc-8b0b-4aa7-9f25-1bdd1405715f",
 		"name": "AutomizyDevTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "student",
+			"name": "project",
 			"item": [
 				{
-					"name": "List",
+					"name": "Search by name",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/student",
+							"raw": "http://localhost:3000/api/project/search/Marmot",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"api",
-								"student"
+								"project",
+								"search",
+								"Marmot"
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "List",
+							"name": "Search by name",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:3000/api/student",
+									"raw": "http://localhost:3000/api/project/search/Marmot",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "3000",
 									"path": [
 										"api",
-										"student"
+										"project",
+										"search",
+										"Marmot"
 									]
 								}
 							},
@@ -52,20 +58,28 @@
 									"value": "Express"
 								},
 								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
 									"key": "Content-Type",
 									"value": "application/json; charset=utf-8"
 								},
 								{
 									"key": "Content-Length",
-									"value": "983"
+									"value": "239"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"3d7-ibu/TzfjDCkj6ll9MdWZ+wnNye0\""
+									"value": "W/\"ef-b/C5shn7vHixny0Tyb++xe6C0dA\""
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 27 May 2020 20:10:41 GMT"
+									"value": "Thu, 18 Jun 2020 12:46:52 GMT"
 								},
 								{
 									"key": "Connection",
@@ -73,86 +87,855 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"students\": [\n        {\n            \"id\": \"1\",\n            \"first_name\": \"Ford\",\n            \"last_name\": \"Feacsrxflines\",\n            \"email\": \"foscsxrd@mail.com\",\n            \"createdAt\": \"Wed May 27 2020 21:12:16 GMT+0200 (Central European Summer Time)\",\n            \"updatedAt\": \"Wed May 27 2020 21:12:16 GMT+0200 (Central European Summer Time)\"\n        },\n        {\n            \"id\": \"9\",\n            \"first_name\": \"Ford\",\n            \"last_name\": \"Feacssrxflines\",\n            \"email\": \"fosscsxrd@mail.com\",\n            \"createdAt\": \"Wed May 27 2020 22:03:21 GMT+0200 (Central European Summer Time)\",\n            \"updatedAt\": \"Wed May 27 2020 22:03:21 GMT+0200 (Central European Summer Time)\"\n        },\n        {\n            \"id\": \"12\",\n            \"first_name\": \"Ford\",\n            \"last_name\": \"Feacssrxsflines\",\n            \"email\": \"\",\n            \"createdAt\": \"Wed May 27 2020 22:03:52 GMT+0200 (Central European Summer Time)\",\n            \"updatedAt\": \"Wed May 27 2020 22:03:52 GMT+0200 (Central European Summer Time)\"\n        },\n        {\n            \"id\": \"17\",\n            \"first_name\": \"Ford\",\n            \"last_name\": \"Fairlane\",\n            \"email\": \"ford.fairlane@mail.com\",\n            \"createdAt\": \"Wed May 27 2020 22:07:25 GMT+0200 (Central European Summer Time)\",\n            \"updatedAt\": \"Wed May 27 2020 22:07:25 GMT+0200 (Central European Summer Time)\"\n        }\n    ]\n}"
+							"body": "{\n    \"projects\": [\n        {\n            \"id\": \"1\",\n            \"name\": \"Nice Marmot \",\n            \"description\": \"Saving Dude's johnson\",\n            \"createdAt\": \"Thu Jun 18 2020 08:32:52 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 08:32:52 GMT+0000 (Coordinated Universal Time)\"\n        }\n    ]\n}"
 						}
 					]
 				},
 				{
-					"name": "Create",
+					"name": "Delete project",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"first_name\": \"Ford\",\n    \"last_name\": \"Fairlane\", \n    \"email\": \"ford.fairlane@mail.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						"url": {
+							"raw": "http://localhost:3000/api/project/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete project",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/project/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"project",
+										"4"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/api/student",
-							"host": [
-								"localhost"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "10"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a-GPrRUgKK9Zpz0mwITJ4b911lcBQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:44:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
 							],
-							"port": "3000",
-							"path": [
-								"api",
-								"student"
-							]
+							"cookie": [],
+							"body": "{\n    \"id\": \"4\"\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Read",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/api/student/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"student",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
+					"name": "Update project",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"first_name\": \"Zuzu\",\n    \"last_name\": \"Petaz\", \n    \"email\": \"zuzu.petaz@mail.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "New project updated",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Description",
+									"type": "text"
 								}
+							],
+							"options": {
+								"urlencoded": {}
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/student/1",
+							"raw": "http://localhost:3000/api/project/4",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"api",
+								"project",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update project",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "New project updated",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Description",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/project/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"project",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "10"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a-GPrRUgKK9Zpz0mwITJ4b911lcBQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:42:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"4\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Save project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "New project title",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Lebowski",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "new project description",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Save project",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "New project title",
+											"type": "text"
+										},
+										{
+											"key": "last_name",
+											"value": "Lebowski",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": "new project description",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/project",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"project"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "231"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e7-cFHuzPF8wFyY9ao4wtOvMvCigXA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:40:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"4\",\n    \"name\": \"New project title\",\n    \"description\": \"new project description\",\n    \"createdAt\": \"Thu Jun 18 2020 12:40:23 GMT+0000 (Coordinated Universal Time)\",\n    \"updatedAt\": \"Thu Jun 18 2020 12:40:23 GMT+0000 (Coordinated Universal Time)\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List projects",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/project",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"project"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "814"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"32e-mVLaSg+PE20LN6kG8SbtkUrbu0A\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:31:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"projects\": [\n        {\n            \"id\": \"1\",\n            \"name\": \"Nice Marmot \",\n            \"description\": \"Saving Dude's johnson\",\n            \"createdAt\": \"Thu Jun 18 2020 08:32:52 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 08:32:52 GMT+0000 (Coordinated Universal Time)\"\n        },\n        {\n            \"id\": \"2\",\n            \"name\": \"Throw the bag out\",\n            \"description\": \"Her life is in your hand!\",\n            \"createdAt\": \"Thu Jun 18 2020 08:33:26 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 09:35:56 GMT+0000 (Coordinated Universal Time)\"\n        },\n        {\n            \"id\": \"3\",\n            \"name\": \"Let's go bowling\",\n            \"description\": \" Hey, cool it Walter. Look, pal, there never was any money. The big Lebowski gave me an empty briefcase, so take it up with him, man.\",\n            \"createdAt\": \"Thu Jun 18 2020 08:40:09 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 12:12:13 GMT+0000 (Coordinated Universal Time)\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Search by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/project/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"project",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Search by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/project/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"project",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e9-TOTYGpA+29rNpQSSjXIO30iDWKA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:47:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"2\",\n    \"name\": \"Throw the bag out\",\n    \"description\": \"Her life is in your hand!\",\n    \"createdAt\": \"Thu Jun 18 2020 08:33:26 GMT+0000 (Coordinated Universal Time)\",\n    \"updatedAt\": \"Thu Jun 18 2020 09:35:56 GMT+0000 (Coordinated Universal Time)\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "management",
+			"item": [
+				{
+					"name": "Get managements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/management/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"management",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get managements",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/management/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"management",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "927"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39f-rD8tBGvt/clS/gDJFViMWTwYLRo\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:49:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"managements\": [\n        {\n            \"id\": \"1\",\n            \"student_id\": \"2\",\n            \"project_id\": \"1\",\n            \"project_name\": \"\",\n            \"project_description\": \"\",\n            \"first_name\": \"\",\n            \"last_name\": \"\",\n            \"email\": \"\"\n        },\n        {\n            \"id\": \"3\",\n            \"student_id\": \"3\",\n            \"project_id\": \"2\",\n            \"project_name\": \"\",\n            \"project_description\": \"\",\n            \"first_name\": \"\",\n            \"last_name\": \"\",\n            \"email\": \"\"\n        },\n        {\n            \"id\": \"4\",\n            \"student_id\": \"1\",\n            \"project_id\": \"2\",\n            \"project_name\": \"\",\n            \"project_description\": \"\",\n            \"first_name\": \"\",\n            \"last_name\": \"\",\n            \"email\": \"\"\n        },\n        {\n            \"id\": \"5\",\n            \"student_id\": \"3\",\n            \"project_id\": \"3\",\n            \"project_name\": \"\",\n            \"project_description\": \"\",\n            \"first_name\": \"\",\n            \"last_name\": \"\",\n            \"email\": \"\"\n        },\n        {\n            \"id\": \"6\",\n            \"student_id\": \"2\",\n            \"project_id\": \"2\",\n            \"project_name\": \"\",\n            \"project_description\": \"\",\n            \"first_name\": \"\",\n            \"last_name\": \"\",\n            \"email\": \"\"\n        },\n        {\n            \"id\": \"7\",\n            \"student_id\": \"2\",\n            \"project_id\": \"3\",\n            \"project_name\": \"\",\n            \"project_description\": \"\",\n            \"first_name\": \"\",\n            \"last_name\": \"\",\n            \"email\": \"\"\n        },\n        {\n            \"id\": \"8\",\n            \"student_id\": \"5\",\n            \"project_id\": \"1\",\n            \"project_name\": \"\",\n            \"project_description\": \"\",\n            \"first_name\": \"\",\n            \"last_name\": \"\",\n            \"email\": \"\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Save management",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "student_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "project_id",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/management/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"management",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Save management",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "student_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "project_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/management/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"management",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "129"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"81-fBtGyozZJRwe/AWkUN38rQejMu0\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:51:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"9\",\n    \"student_id\": \"1\",\n    \"project_id\": \"1\",\n    \"project_name\": \"\",\n    \"project_description\": \"\",\n    \"first_name\": \"\",\n    \"last_name\": \"\",\n    \"email\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "By student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/management/student/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"management",
 								"student",
 								"1"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "By student",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/management/student/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"management",
+										"student",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "426"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1aa-rb6MWnNrewQdK4M4g1dZ6klhvQ4\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:52:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"managements\": [\n        {\n            \"id\": \"4\",\n            \"student_id\": \"1\",\n            \"project_id\": \"2\",\n            \"project_name\": \"Throw the bag out\",\n            \"project_description\": \"Her life is in your hand!\",\n            \"first_name\": \"Jeffrey\",\n            \"last_name\": \"Lebowski\",\n            \"email\": \"thebiglebowski@mail.hu\"\n        },\n        {\n            \"id\": \"9\",\n            \"student_id\": \"1\",\n            \"project_id\": \"1\",\n            \"project_name\": \"Nice Marmot \",\n            \"project_description\": \"Saving Dude's johnson\",\n            \"first_name\": \"Jeffrey\",\n            \"last_name\": \"Lebowski\",\n            \"email\": \"thebiglebowski@mail.hu\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "By project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/management/project/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"management",
+								"project",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "By project",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/management/project/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"management",
+										"project",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "628"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"274-wdrxCKKm52eVvyR/QewBIpO2Bvg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:53:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"managements\": [\n        {\n            \"id\": \"3\",\n            \"student_id\": \"3\",\n            \"project_id\": \"2\",\n            \"project_name\": \"Throw the bag out\",\n            \"project_description\": \"Her life is in your hand!\",\n            \"first_name\": \"Walter\",\n            \"last_name\": \"Sobchak\",\n            \"email\": \"walter@mail.hu\"\n        },\n        {\n            \"id\": \"4\",\n            \"student_id\": \"1\",\n            \"project_id\": \"2\",\n            \"project_name\": \"Throw the bag out\",\n            \"project_description\": \"Her life is in your hand!\",\n            \"first_name\": \"Jeffrey\",\n            \"last_name\": \"Lebowski\",\n            \"email\": \"thebiglebowski@mail.hu\"\n        },\n        {\n            \"id\": \"6\",\n            \"student_id\": \"2\",\n            \"project_id\": \"2\",\n            \"project_name\": \"Throw the bag out\",\n            \"project_description\": \"Her life is in your hand!\",\n            \"first_name\": \"Jeffrey\",\n            \"last_name\": \"Lebowski\",\n            \"email\": \"thedude@mail.com\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete",
@@ -160,7 +943,95 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/api/student/1",
+							"raw": "http://localhost:3000/api/management/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"management",
+								"9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/management/9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"management",
+										"9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "10"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a-uoV/YHZxIwhthHadpbgjCR8YEYw\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 12:56:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"9\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "List students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/student/",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -168,11 +1039,483 @@
 							"path": [
 								"api",
 								"student",
-								"1"
+								""
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "List students",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/student/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"student",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "960"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3c0-fvp/1pqk3JsKv5VjHZJGNvrwa7M\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 13:04:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"students\": [\n        {\n            \"id\": \"1\",\n            \"first_name\": \"Jeffrey\",\n            \"last_name\": \"Lebowski\",\n            \"email\": \"thebiglebowski@mail.hu\",\n            \"createdAt\": \"Thu Jun 18 2020 08:28:42 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 08:28:42 GMT+0000 (Coordinated Universal Time)\"\n        },\n        {\n            \"id\": \"2\",\n            \"first_name\": \"Jeffrey\",\n            \"last_name\": \"Lebowski\",\n            \"email\": \"thedude@mail.com\",\n            \"createdAt\": \"Thu Jun 18 2020 08:28:59 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 10:46:50 GMT+0000 (Coordinated Universal Time)\"\n        },\n        {\n            \"id\": \"3\",\n            \"first_name\": \"Walter\",\n            \"last_name\": \"Sobchak\",\n            \"email\": \"walter@mail.hu\",\n            \"createdAt\": \"Thu Jun 18 2020 08:29:46 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 08:29:46 GMT+0000 (Coordinated Universal Time)\"\n        },\n        {\n            \"id\": \"5\",\n            \"first_name\": \"Karl\",\n            \"last_name\": \"Hungus\",\n            \"email\": \"karl@mail.com\",\n            \"createdAt\": \"Thu Jun 18 2020 10:46:40 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 10:46:40 GMT+0000 (Coordinated Universal Time)\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Save student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "first_name",
+									"value": "Maude",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Lebowski",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "maude@mail.com",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/student/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"student",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Save student",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "first_name",
+											"value": "Maude",
+											"type": "text"
+										},
+										{
+											"key": "last_name",
+											"value": "Lebowski",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "maude@mail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/student/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"student",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e9-+RVQzguiiX6DyWYdiaVXiKNmcFc\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 13:06:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6\",\n    \"first_name\": \"Maude\",\n    \"last_name\": \"Lebowski\",\n    \"email\": \"maude@mail.com\",\n    \"createdAt\": \"Thu Jun 18 2020 13:06:21 GMT+0000 (Coordinated Universal Time)\",\n    \"updatedAt\": \"Thu Jun 18 2020 13:06:21 GMT+0000 (Coordinated Universal Time)\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update student",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "first_name",
+									"value": "Julianne",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Moore",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "maude@mail.com",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/student/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"student",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update student",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "first_name",
+											"value": "Julianne",
+											"type": "text"
+										},
+										{
+											"key": "last_name",
+											"value": "Moore",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "maude@mail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/student/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"student",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "10"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a-/iOKK0SajDCYCKe2aghQNgSNXO8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 13:09:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/student/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"student",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete student",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/student/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"student",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "10"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a-/iOKK0SajDCYCKe2aghQNgSNXO8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 13:10:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get student by email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/student/search/dude",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"student",
+								"search",
+								"dude"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get student by email",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/student/search/dude",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"student",
+										"search",
+										"dude"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:8080"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "252"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fc-zg1spuZsAOK6TaXEa3QYsA/oHPY\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 18 Jun 2020 13:11:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"students\": [\n        {\n            \"id\": \"2\",\n            \"first_name\": \"Jeffrey\",\n            \"last_name\": \"Lebowski\",\n            \"email\": \"thedude@mail.com\",\n            \"createdAt\": \"Thu Jun 18 2020 08:28:59 GMT+0000 (Coordinated Universal Time)\",\n            \"updatedAt\": \"Thu Jun 18 2020 10:46:50 GMT+0000 (Coordinated Universal Time)\"\n        }\n    ]\n}"
+						}
+					]
 				}
 			],
 			"protocolProfileBehavior": {}

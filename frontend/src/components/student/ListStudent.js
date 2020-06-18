@@ -124,7 +124,7 @@ const ListStudent = ({ reloadListTrigger }) => {
       size="large"
       spinning={loader}>
       <Search
-        placeholder="Enter user first name OR last name"
+        placeholder="Enter student email"
         enterButton="Search"
         size="large"
         onSearch={value => onSearch(value)} />
