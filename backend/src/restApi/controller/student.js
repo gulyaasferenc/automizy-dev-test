@@ -1,8 +1,9 @@
-import { body, validationResult } from 'express-validator'
+import { body } from 'express-validator'
 import path from 'path'
 import grpc from 'grpc'
 const protoLoader = require("@grpc/proto-loader")
 import config from '../../config/service'
+import { handleError } from '../lib'
 const PROTO_PATH = path.join(__dirname, '../../proto/student.proto')
 
 // check mandatory props
@@ -16,19 +17,6 @@ exports.validationRules = (method) => {
       ]
     }
   }
-}
-
-exports.validate = (req, res, next) => {
-  const errors = validationResult(req)
-  if (errors.isEmpty()) {
-    return next()
-  }
-  const extractedErrors = []
-  errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }))
-
-  return res.status(400).json({
-    errors: extractedErrors
-  })
 }
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -56,13 +44,13 @@ const studentList = (options) => {
 exports.list = async (req, res, next) => {
   try {
     const options = {
-      email: req.params.email ? req.params.email : null
+      email: req.params.email ? req.params.email : null,
     }
     // pass options which will be used by the microservice
     let result = await studentList(options)
     res.status(200).json(result)
-  } catch (e) {
-    res.json(e)
+  } catch (err) {
+    handleError(err, res, '')
   }
 }
 
@@ -86,19 +74,7 @@ exports.create = async (req, res, next) => {
     })
     res.status(201).json(result)
   } catch (err) {
-    switch (err?.details) {
-      case 'ALREADY_EXISTS':
-        res.status(409).json({
-          error: err.metadata.getMap()
-        })
-      case 'CUSTOM_ALREADY_EXISTS':
-        res.status(409).json({
-          error: 'Student with this email already exists'
-        })
-        break
-      default:
-        res.status(500).json(err)
-    }
+    handleError(err, res, 'Student with this email already exists')
   }
 }
 
@@ -118,13 +94,8 @@ exports.read = async (req, res, next) => {
       "id": req.params.id
     })
     res.status(200).json(result)
-  } catch (e) {
-    if (e.details === 'Not found') {
-      res.status(204).json(e)
-    }
-    else {
-      res.status(500).json(e)
-    }
+  } catch (err) {
+    handleError(err, res, '')
   }
 }
 
@@ -148,21 +119,7 @@ exports.update = async (req, res, next) => {
     })
     res.status(200).json({ id: req.params.id })
   } catch (err) {
-    if (err.details === 'Not found') {
-      res.status(204).json(e)
-    }
-    else {
-      switch (err?.details) {
-        // email must be unique, but a user friendly message is a good idea
-        case 'CUSTOM_ALREADY_EXISTS':
-          res.status(409).json({
-            error: 'Student with this email already exists'
-          })
-          break
-        default:
-          res.status(500).json(err)
-      }
-    }
+   handleError(err, res, 'Student with this email already exists')
   }
 }
 
@@ -182,12 +139,7 @@ exports.delete = async (req, res, next) => {
       "id": req.params.id
     })
     res.status(200).json({ id: req.params.id })
-  } catch (e) {
-    if (e.details === 'Not found') {
-      res.status(204).json(e)
-    }
-    else {
-      res.status(500).json(e)
-    }
+  } catch (err) {
+    handleError(err, res, '')
   }
 }

@@ -1,3 +1,7 @@
+/**
+ * Show all students which belong to a specific project
+ */
+
 import React, { useState, useEffect } from 'react'
 import { Tooltip, Row, Col, Spin, Empty, Button, Modal, message } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
@@ -49,7 +53,7 @@ const StudentsForProject = ({ project_id, onCancel }) => {
       onCancel() { onCancel }
     })
   }
-  // Project törlése
+  // Delete student from the association list
   const deleteStudent = ({ id, name }) => {
     axios.delete('api/management/' + id)
       .then(res => {

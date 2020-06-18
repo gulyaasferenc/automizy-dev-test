@@ -1,3 +1,7 @@
+/**
+ * Main page of the management section
+ */
+
 import React, { useState } from 'react'
 import { Layout, Row, Col, Divider, Typography, Button} from 'antd'
 const { Title } = Typography

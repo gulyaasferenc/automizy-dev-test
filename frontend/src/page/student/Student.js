@@ -1,3 +1,7 @@
+/**
+ * Main page of the student section
+ */
+
 import React, { useState } from 'react'
 import {
   Layout,

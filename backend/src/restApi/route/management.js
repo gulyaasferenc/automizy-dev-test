@@ -19,6 +19,6 @@ router.post('/', management.validationRules('create'), management.validate, mana
 router.get('/student/:student_id', management.readByStudent)
 // GET request for read an item by project_id
 router.get('/project/:project_id', management.readByProject)
-// GET request for delete item by id
+// DELETE request for delete item by id
 router.delete('/:id', management.delete)
 export default router

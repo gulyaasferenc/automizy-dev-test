@@ -1,3 +1,7 @@
+/**
+ * List all of the sudents on student main page
+ */
+
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
@@ -35,7 +39,7 @@ const ListStudent = ({ reloadListTrigger }) => {
     error: false
   })
 
-  // Tanulók betöltése
+  // Load students
   useEffect(
     () => {
       setLoader(true)
@@ -74,7 +78,7 @@ const ListStudent = ({ reloadListTrigger }) => {
   )
 
 
-  // Adott tanuló törlésére kattinttás
+  // Click on delete
   const onClickDeleteStudent = ({ name, id }) => {
     confirm({
       title: 'Are you sure delete this student?',
@@ -89,7 +93,7 @@ const ListStudent = ({ reloadListTrigger }) => {
       onCancel() { }
     })
   }
-  // Tanuló törlése
+  // Delete student
   const deleteStudent = ({ id, name }) => {
     setLoader(true)
     axios.delete('api/student/' + id)
@@ -103,6 +107,8 @@ const ListStudent = ({ reloadListTrigger }) => {
         setLoader(false)
       )
   }
+
+  // open form and load student data into it
   const onClickEditStudent = (inItem) => {
     setItemToModal(inItem)
     setShowModal(true)
@@ -116,6 +122,8 @@ const ListStudent = ({ reloadListTrigger }) => {
     setTrigger(new Date().getTime())
     message.success('The following student has been saved: ' + name)
   }
+
+  // Click on search
   const onSearch = (value) => {
     setSearchValue(value)
   }

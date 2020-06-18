@@ -1,3 +1,7 @@
+/**
+ * List all of the projects on project main page
+ */
+
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
@@ -31,7 +35,6 @@ const ListProject = ({ reloadListTrigger }) => {
     complete: false,
     error: false
   })
-  // Projectk betöltése
   useEffect(
     () => {
       setLoader(true)
@@ -68,7 +71,7 @@ const ListProject = ({ reloadListTrigger }) => {
     },
     [trigger, reloadListTrigger, searchValue]
   )
-  // Adott project törlésére kattinttás
+  // Click on project
   const onClickDeleteProject = ({ event, name, id }) => {
     confirm({
       title: 'Are you sure delete this project?',
@@ -84,7 +87,7 @@ const ListProject = ({ reloadListTrigger }) => {
     })
     event.stopPropagation()
   }
-  // Project törlése
+  // Delete project
   const deleteProject = ({ id, name }) => {
     setLoader(true)
     axios.delete('api/project/' + id)
@@ -99,6 +102,7 @@ const ListProject = ({ reloadListTrigger }) => {
       )
   }
 
+  // open form and load project data into it
   const onClickEditProject = ({event, inItem}) => {
     setItemToModal(inItem)
     setShowModal(true)
@@ -114,6 +118,7 @@ const ListProject = ({ reloadListTrigger }) => {
     message.success('The following project has been saved: ' + name)
   }
 
+  // Click on search
   const onSearch = (value) => {
     setSearchValue(value)
   }

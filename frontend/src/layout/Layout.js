@@ -1,3 +1,7 @@
+/**
+ * Skeleton of the web app
+ */
+
 import React, { useState } from 'react'
 import {
   BrowserRouter as Router,

@@ -1,3 +1,7 @@
+/**
+ * Component which get students-projects associations by students, using collapse
+ */
+
 import React, { useState, useEffect } from 'react'
 import { Spin, Empty, List, Card, Button, Input, Tooltip } from 'antd'
 const { Search } = Input
@@ -16,12 +20,14 @@ const ByStudents = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [inputId, setInputId] = useState(null)
   const [myKey, setMyKey] = useState(0)
+  // reload the html
   const [triggerKey, setTriggerKey] = useState(0)
   const [searchValue, setSearchValue] = useState(null)
 
   useEffect(() => {
     setSpinner(true)
     let endpoint = ''
+    // check whether it is a search or should get all of the students
     if (searchValue) {
       endpoint = `api/student/search/${searchValue}`
     } else {
@@ -61,6 +67,7 @@ const ByStudents = () => {
     setMyKey(currentKey + 1)
   }
 
+  // search value also trigger useEffect
   const onSearch = (value) => {
     setSearchValue(value)
   }

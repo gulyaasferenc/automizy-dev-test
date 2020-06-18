@@ -1,6 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import project from '../controller/project'
+import { validate } from '../middleware'
 
 // Classic CRUD solution
 // Function	    Request Method
@@ -16,11 +17,11 @@ router.get('/', project.list)
 // GET project by search
 router.get('/search/:name', project.list)
 // POST request for create an item
-router.post('/', project.validationRules('create'), project.validate, project.create)
+router.post('/', project.validationRules('create'), validate, project.create)
 // GET request for read an item by id
 router.get('/:id', project.read)
-// GET request for update an item by id
+// PUT request for update an item by id
 router.put('/:id', project.update)
-// GET request for delete item by id
+// DELETE request for delete item by id
 router.delete('/:id', project.delete)
 export default router

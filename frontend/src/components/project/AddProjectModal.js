@@ -1,3 +1,11 @@
+/**
+ * Form to create/edit projects
+ * 
+ * @param item: {object}
+ * @param onClickCancel: {function}
+ * @param onDone: {function}
+ */
+
 import React from 'react'
 import axios from 'axios'
 import {
@@ -28,7 +36,7 @@ const AddProjectModal = ({
         console.log('Validate Failed:', info)
       })
   }
-  // Project mentése
+  // Save project
   const saveProject = ({ name, description }) => {
     if (item && item.id) {
       axios.put(`api/project/${item.id}`, {

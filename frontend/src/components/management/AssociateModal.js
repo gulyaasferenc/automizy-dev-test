@@ -1,3 +1,11 @@
+/**
+ * Modal for create associations between students and projects
+ * @param items: {string}
+ * @param visible: {boolean}
+ * @param inputId: {string}
+ * @param onCancel: {function}
+ */
+
 import React, { useState, useEffect } from 'react'
 import { Spin, Modal, Select } from 'antd'
 import axios from 'axios'
@@ -10,6 +18,8 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
     completed: true,
     error: false
   })
+
+  // if user clicks ok, set post request body
   const onOk = () => {
     const body = {}
     if (items === 'students') {
@@ -22,6 +32,8 @@ const AssociateModal = ({ items, visible, inputId, onCancel }) => {
     axios.post('api/management/', body)
     onCancel()
   }
+
+  // get items for the select options
   useEffect(() => {
     setAllItems({
       ...allItems,
