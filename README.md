@@ -1,8 +1,10 @@
 # Automizy Dev Test
-## Arhitektúra felépítése
 ---
 Start the project like this: docker-compse up --build
+---
+wait_for script requires bash
 
+## Arhitektúra felépítése
 ---
 ![alt text](https://bitbucket.org/automizy-public/dev-test/raw/7b1eee7c38731d438707982520c2be87bd0534d3/doc/image/arhitecture.png "Arhitect")
 ## Adatbázis felépítése
